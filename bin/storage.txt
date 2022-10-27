@@ -1,0 +1,97 @@
+
+
+/*
+
+//Updated to new 10/27/ 4:41pm
+import java.util.Scanner;
+
+public class Maze {
+    private Cell[][] maze;
+    private int rows;
+    private int cols;
+    private SetArr<Cell> visited;
+    private QueueArr<Cell> toVisit;
+    private Cell start;
+    private Cell finish;
+
+    public Maze(Scanner input) {
+        rows = input.nextInt();
+        cols = input.nextInt();
+        input.nextLine();
+        maze = new Cell[rows][cols];
+        // Start is the very first cell in the maze
+        // Finish is the very last cell in the maze
+        start = maze[0][0];
+        finish = maze[rows - 1][cols - 1];
+        visited = new SetArr<Cell>();
+        toVisit = new QueueArr<Cell>();
+        for (int i = 0; i < rows; i++) {
+            String line = input.nextLine();
+            for (int j = 0; j < cols; j++) {
+                maze[i][j] = new Cell();
+                maze[i][j].setRow(i);
+                maze[i][j].setCol(j);
+                if (line.charAt(j) == '1') {
+                    if (i > 0) {
+                        maze[i][j].setNeighbor(Cell.NORTH);
+                        maze[i - 1][j].setNeighbor(Cell.SOUTH);
+                    }
+                    if (j > 0) {
+                        maze[i][j].setNeighbor(Cell.WEST);
+                        maze[i][j - 1].setNeighbor(Cell.EAST);
+                    }
+                }
+            }
+        }
+    }
+
+    public String asText() {
+        String result = "";
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (maze[i][j].isOnPath()) {
+                    result += "@";
+                } else if (maze[i][j].hasNeighbor(Cell.NORTH) && maze[i][j].hasNeighbor(Cell.SOUTH)
+                        && maze[i][j].hasNeighbor(Cell.EAST) && maze[i][j].hasNeighbor(Cell.WEST)) {
+                    result += "1";
+                } else {
+                    result += "0";
+                }
+            }
+            result += " ";
+        }
+        return result;
+    }
+
+    public boolean findPath() {
+        toVisit.enqueue(start);
+        while (!toVisit.isEmpty()) {
+            Cell current = toVisit.dequeue();
+            if (current == finish) {
+                return true;
+            }
+            visited.enter(current);
+            if (current.hasNeighbor(Cell.NORTH) && !visited.contains(maze[current.getRow() - 1][current.getCol()])) {
+                toVisit.enqueue(maze[current.getRow() - 1][current.getCol()]);
+            }
+            if (current.hasNeighbor(Cell.SOUTH) && !visited.contains(maze[current.getRow() + 1][current.getCol()])) {
+                toVisit.enqueue(maze[current.getRow() + 1][current.getCol()]);
+            }
+            if (current.hasNeighbor(Cell.EAST) && !visited.contains(maze[current.getRow()][current.getCol() + 1])) {
+                toVisit.enqueue(maze[current.getRow()][current.getCol() + 1]);
+            }
+            if (current.hasNeighbor(Cell.WEST) && !visited.contains(maze[current.getRow()][current.getCol() - 1])) {
+                toVisit.enqueue(maze[current.getRow()][current.getCol() - 1]);
+            }
+        }
+        return false;
+    }
+
+    public boolean pathFound() {
+        return findPath();
+    }
+
+}
+
+
+ */
