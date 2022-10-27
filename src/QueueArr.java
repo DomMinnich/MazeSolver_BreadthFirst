@@ -1,4 +1,4 @@
-//Updated to new 10/27/ 4:41pm
+//Updated 10/27/2022 5:37pm R
 public class QueueArr<E> {
     private E[] queue;
     private int size;

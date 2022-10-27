@@ -1,5 +1,4 @@
-//Updated to new 10/27/ 4:41pm
-public class SetArr <E> {
+public class SetArr<E> {
     private E[] set;
     private int size;
 
@@ -62,7 +61,7 @@ public class SetArr <E> {
         return result;
     }
 
-    //contains method
+    // contains method
     public boolean contains(E item) {
         for (int i = 0; i < size; i++) {
             if (set[i].equals(item)) {
@@ -71,5 +70,5 @@ public class SetArr <E> {
         }
         return false;
     }
-    
+
 }
