@@ -1,6 +1,6 @@
 
-//Updated to new 10/27/ 4:41pm
-import javafx.application.Application; // 7
+//Updated 10/27/2022 5:37pm R
+import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -12,7 +12,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Background;
-//Updated 10/27/2022 5:37pm R
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
