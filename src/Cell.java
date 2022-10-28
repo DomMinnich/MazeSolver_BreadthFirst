@@ -45,45 +45,36 @@ public class Cell {
         return onPath;
     }
 
-    //getSymbol() method for 'S' and 'F' and ' ' and '_' and '|' and 'X'
-    public char getSymbol() {
-        if (onPath) {
-            return 'X';
-        } else if (neighbors[NORTH] && neighbors[SOUTH] && neighbors[EAST] && neighbors[WEST]) {
-            return ' ';
-        } else if (neighbors[NORTH] && neighbors[SOUTH] && neighbors[EAST]) {
-            return '_';
-        } else if (neighbors[NORTH] && neighbors[SOUTH] && neighbors[WEST]) {
-            return '_';
-        } else if (neighbors[NORTH] && neighbors[EAST] && neighbors[WEST]) {
-            return '|';
-        } else if (neighbors[SOUTH] && neighbors[EAST] && neighbors[WEST]) {
-            return '|';
-        } else if (neighbors[NORTH] && neighbors[SOUTH]) {
-            return '|';
-        } else if (neighbors[EAST] && neighbors[WEST]) {
-            return '_';
-        } else if (neighbors[NORTH] && neighbors[EAST]) {
-            return '/';
-        } else if (neighbors[NORTH] && neighbors[WEST]) {
-            return '\\';
-        } else if (neighbors[SOUTH] && neighbors[EAST]) {
-            return '\\';
-        } else if (neighbors[SOUTH] && neighbors[WEST]) {
-            return '/';
-        } else if (neighbors[NORTH]) {
-            return '|';
-        } else if (neighbors[SOUTH]) {
-            return '|';
-        } else if (neighbors[EAST]) {
-            return '_';
-        } else if (neighbors[WEST]) {
-            return '_';
-        } else {
-            return ' ';
+    //set the cell char
+    public void setCellChar(char c) {
+        if (c == '|') {
+            neighbors[Cell.NORTH] = true;
+        } else if (c == '_') {
+            neighbors[Cell.WEST] = true;
+            neighbors[Cell.EAST] = true;
+        } else if (c == ' ') {
+            neighbors[Cell.NORTH] = true;
+            neighbors[Cell.SOUTH] = true;
+            neighbors[Cell.WEST] = true;
+            neighbors[Cell.EAST] = true;
         }
     }
 
+    //get the cell char
+    public char getCellChar() {
+        if (neighbors[Cell.NORTH]) {
+            return '|';
+        } else if (neighbors[Cell.WEST] && neighbors[Cell.EAST]) {
+            return '_';
+        } else if (neighbors[Cell.NORTH] && neighbors[Cell.SOUTH] && neighbors[Cell.WEST] && neighbors[Cell.EAST]) {
+            return ' ';
+        } else {
+            return 'X';
+        }
+    }
+
+
+    
    
     
 }

@@ -10,7 +10,6 @@ import java.util.Scanner;
  * Internally the maze should be represented as a two-dimensional array of Cells
  */
 
-   
 /*
  * 2)
  * Method public solveMaze()
@@ -34,7 +33,8 @@ import java.util.Scanner;
  * public toString()
  * This method returns a string representation of the maze
  * The string representation of the maze should be the same as the input file
- * except that the path is marked with 'X'
+ * Except that the path is marked with 'X'
+ * Every row should be on a new line
  */
 
 public class Maze {
@@ -61,34 +61,46 @@ public class Maze {
                     if (j > 0) {
                         maze[i][j].setNeighbor(Cell.WEST);
                         maze[i][j - 1].setNeighbor(Cell.EAST);
+                        //set the cell char
+                        maze[i][j].setCellChar(line.charAt(j));
                     }
                     if (i > 0) {
                         maze[i][j].setNeighbor(Cell.NORTH);
-                        maze[i - 1][j].setNeighbor(Cell.SOUTH);
+                        //set the cell char
+                        maze[i][j].setCellChar(line.charAt(j));
                     }
                 } else if (line.charAt(j) == '_') {
                     if (j > 0) {
                         maze[i][j].setNeighbor(Cell.WEST);
                         maze[i][j - 1].setNeighbor(Cell.EAST);
+                        //set the cell char
+                        maze[i][j].setCellChar(line.charAt(j));
                     }
                 } else if (line.charAt(j) == ' ') {
                     if (j > 0) {
                         maze[i][j].setNeighbor(Cell.WEST);
                         maze[i][j - 1].setNeighbor(Cell.EAST);
+                        //set the cell char
+                        maze[i][j].setCellChar(line.charAt(j));
                     }
                     if (i > 0) {
                         maze[i][j].setNeighbor(Cell.NORTH);
                         maze[i - 1][j].setNeighbor(Cell.SOUTH);
+                        //set the cell char
+                        maze[i][j].setCellChar(line.charAt(j));
                     }
                 } else if (line.charAt(j) == 'S') {
                     start = maze[i][j];
+                    //set the cell char
+                    maze[i][j].setCellChar(line.charAt(j));
                 } else if (line.charAt(j) == 'F') {
                     finish = maze[i][j];
+                    //set the cell char
+                    maze[i][j].setCellChar(line.charAt(j));
                 }
             }
         }
     }
-
 
     public boolean solveMaze() {
         toVisit.enqueue(start);
@@ -114,55 +126,35 @@ public class Maze {
         return false;
     }
 
-
-
-
-
-
-
     public boolean hasPath() {
         return solveMaze();
     }
 
-    public String toString() {
+    public String toStringA() {
         String result = "";
         for (int i = 0; i < rows; i++) {
+            result += "\n";
             for (int j = 0; j < cols; j++) {
-                if (maze[i][j].equals(start)) {
-                    result += "S";
-                } else if (maze[i][j].equals(finish)) {
-                    result += "F";
-                } else if (visited.contains(maze[i][j])) {
-                    result += "X";
-                } else {
-                    result += maze[i][j].getSymbol();
-                }
+                result += maze[i][j].getCellChar();
             }
-            result += " ";
+            result += "";
         }
         return result;
     }
 
-    public static void main(String[] args) {
+
+    public static void main(String[] args) throws FileNotFoundException {
+        //get file from user
         Scanner input = new Scanner(System.in);
-        System.out.print("Enter the name of the file containing the maze: ");
+        System.out.println("Enter the name of the file containing the maze: ");
         String fileName = input.nextLine();
-        try {
-            Scanner file = new Scanner(new File(fileName));
-            Maze maze = new Maze(file);
-            System.out.println(maze);
-            if (maze.hasPath()) {
-                System.out.println("There is a path from the start to the finish.");
-            } else {
-                System.out.println("There is no path from the start to the finish.");
-            }
-            System.out.println(maze);
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found.");
-        }
+        File file = new File(fileName);
+        Scanner fileInput = new Scanner(file);
+        Maze maze = new Maze(fileInput);
+        System.out.println(maze.toStringA());
+        System.out.println(maze.solveMaze());
     }
 }
-
 
 
 

@@ -1,5 +1,94 @@
 
 
+   
+    public static void main(String[] args) throws FileNotFoundException {
+        //get fiel name from user
+        Scanner input = new Scanner(System.in);
+        System.out.println("Enter the file name: ");
+        String fileName = input.nextLine();
+        //create a scanner object
+        Scanner file = new Scanner(new File(fileName));
+        //create a maze object
+        Maze maze = new Maze(file);
+        //print the maze
+        System.out.println(maze.toStringB());
+        //solve the maze
+        maze.solveMaze();
+        //print the maze
+        System.out.println(maze.toString());
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public String toString() {
+        String result = "";
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (maze[i][j].equals(start)) {
+                    result += "S";
+                } else if (maze[i][j].equals(finish)) {
+                    result += "F";
+                } else if (visited.contains(maze[i][j])) {
+                    result += "X";
+                } else {
+                    result += maze[i][j].getSymbol();
+                }
+            }
+            result += " ";
+        }
+        return result;
+    }
+
+
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Enter the name of the file containing the maze: ");
+        String fileName = input.nextLine();
+        try {
+            Scanner file = new Scanner(new File(fileName));
+            Maze maze = new Maze(file);
+            System.out.println(maze);
+            if (maze.hasPath()) {
+                System.out.println("There is a path from the start to the finish.");
+            } else {
+                System.out.println("There is no path from the start to the finish.");
+            }
+            System.out.println(maze);
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found.");
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 public static void main(String[] args) {
