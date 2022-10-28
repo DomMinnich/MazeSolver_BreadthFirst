@@ -47,4 +47,14 @@ public class QueueArr<E> {
         rear = size;
     }
 
+    // contains method
+    public boolean contains(E item) {
+        for (int i = 0; i < size; i++) {
+            if (queue[(front + i) % queue.length].equals(item)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
