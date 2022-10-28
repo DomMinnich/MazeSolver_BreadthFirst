@@ -109,10 +109,77 @@ public class Maze {
         }
     }
 
+    //public solveMaze()
+    //This method should solve the maze by finding a path from the start to the finish.
+    //When the path from start to finish is found, the method should set the cellChar of each cell in the path to 'X'
+    //The method should return true if a path is found and false if no path is found.
+    //The cells that have been visited should be stored in the Set<Cell> visited
+    //The cells that have not yet been visited should be stored in the Queue<Cell> toVisit
+    // Use Location class to store the row and column of the cell
+    //The maze has '|' as walls and are not passable
+    //The maze has '_' which can be passed through going west or east
+    //The maze has ' ' which can be passed through going north or south or east or west
+    
+    public boolean solveMaze2() {
+        System.out.println("add the start cell to the queue");
+        toVisit.enqueue(start);
+        //while the queue is not empty
+        System.out.println("while the queue is not empty");
+        while (!toVisit.isEmpty()) {
+            //dequeue the cell
+            System.out.println("dequeue the cell");
+            Cell current = toVisit.dequeue();
+            //if the cell is the finish
+            System.out.println("if the cell is the finish");
+            if (current == finish) {
+                //return true
+                System.out.println("return true");
+                return true;
+
+            }
+            //if the cell is not in the visited set
+            System.out.println("if the cell is not in the visited set");
+            if (!visited.contains(current)) {
+                //add the cell to the visited set
+                System.out.println("add the cell to the visited set");
+                visited.enter(current);
+                //for each neighbor of the cell
+                System.out.println("for each neighbor of the cell");
+                for (int i = 0; i < 4; i++) {
+                    //if the neighbor is not null
+                    System.out.println("if the neighbor is not null");
+                    if (current.getNeighbor(i) != null) {
+                        //if the neighbor is not in the visited set
+                        System.out.println("if the neighbor is not in the visited set");
+                        if (!visited.contains(current.getNeighbor(i))) {
+                            //add the neighbor to the queue
+                            System.out.println("add the neighbor to the queue");
+                            toVisit.enqueue(current.getNeighbor(i));
+                        }
+                    }
+                }
+            }
+        }
+        //replace visited cells with 'X'
+        System.out.println("replace visited cells with 'X'");
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (visited.contains(maze[i][j])) {
+                    maze[i][j].setCellChar('X');
+                }
+            }
+        }
+
+        //return false
+        return false;
+    }
+
 
     public boolean solveMaze() {
         toVisit.enqueue(start);
+        System.out.println("Step 1: Add the start cell to the queue");
         while (!toVisit.isEmpty()) {
+            System.out.println("Step 2: Dequeue the cell");
             Cell current = toVisit.dequeue();
             if (current.equals(finish)) {
                 return true;
@@ -160,8 +227,8 @@ public class Maze {
         Scanner fileInput = new Scanner(file);
         Maze maze = new Maze(fileInput);
         System.out.println(maze.toStringA());
-        System.out.println(maze.solveMaze());
-        System.out.println(maze.toStringA()+"Solved");
+        System.out.println("The maze was solved : "+maze.solveMaze());
+        System.out.println(maze.toStringA()+" Result after solve method");
     }
 }
 

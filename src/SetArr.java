@@ -1,6 +1,6 @@
 public class SetArr<E> {
     private E[] set;
-    private int size;
+    private int size =1;
 
     public SetArr() {
         set = (E[]) new Object[size];
@@ -8,22 +8,13 @@ public class SetArr<E> {
     }
 
     public void enter(E item) {
-        if (!contains(item)) {
-            //if empty
-            //if not empty and not full 
-            //if full ensure capacity
-            if(size == 0){
-                set[0] = item;
-                size++;
-            if (size == set.length) {
-                ensureCapacity();
-            }
-            set[size] = item;
-            size++;
-            }
+        if (size == set.length) {
+            ensureCapacity();
         }
+        set[size] = item;
+        size++;
     }
-    
+
 
     public boolean isElement(E item) {
         for (int i = 0; i < size; i++) {
