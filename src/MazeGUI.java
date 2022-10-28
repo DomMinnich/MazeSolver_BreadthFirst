@@ -1,5 +1,7 @@
 
 //Updated 10/27/2022 5:37pm R
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 import javafx.application.Application;
@@ -85,22 +87,22 @@ public class MazeGUI extends Application {
 
             public void handle(ActionEvent e) {
 
-                System.out.println("Please enter the name of the file containing the maze:");
-                Scanner input = new Scanner(System.in);
-                System.out.println("Thank you...");
-                Maze maze = new Maze(input);
-                maze.solve();
-                maze.printMaze();
-                Label mazeLabel = new Label(maze.asText());
-                mazeLabel.setFont(font2);
-                mazeLabel.setTextFill(Color.BLUE);
-                scrollBarPane.getChildren().add(mazeLabel);
+                // System.out.println("Please enter the name of the file containing the maze:");
+                // Scanner input = new Scanner(System.in);
+                // System.out.println("Thank you...");
+                // Maze maze = new Maze(input);
+                // maze.solve();
+                // maze.printMaze();
+                // Label mazeLabel = new Label(maze.asText());
+                // mazeLabel.setFont(font2);
+                // mazeLabel.setTextFill(Color.BLUE);
+                // scrollBarPane.getChildren().add(mazeLabel);
 
-                Scanner input = new Scanner(System.in);
-                Maze maze = new Maze(input);
-                maze.solve();
-                maze.printMaze();
-                System.out.println(maze.hasPath());
+                // Scanner input = new Scanner(System.in);
+                // Maze maze = new Maze(input);
+                // maze.solve();
+                // maze.printMaze();
+                // System.out.println(maze.hasPath());
 
                 // Label r = new Label();
                 // r.setTextFill(Color.BLUE);
@@ -136,10 +138,27 @@ public class MazeGUI extends Application {
         EventHandler<ActionEvent> findPathSingle = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 // TODO: Find path of the current single maze
-
+                Scanner input = new Scanner(System.in);
+        System.out.println("Enter the name of the file containing the maze: ");
+        String fileName = input.nextLine();
+        File file = new File(fileName);
+        try (Scanner fileInput = new Scanner(file)) {
+            Maze maze2 = new Maze(fileInput);
+            System.out.println(maze2.toStringA());
+            System.out.println(maze2.solveMaze());
+            System.out.println(maze2.toStringA());
+            Label label2 = new Label(maze2.toStringA());
+            label2.setFont(font2);
+            label2.setTextFill(Color.BLUE);
+            scrollBarPane.getChildren().add(label2);
+        } catch (FileNotFoundException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        
             }
         };
-
+        
         findPathSingleBt.setOnAction(findPathSingle);
 
         //////////////////// Find Path All ////////////////////

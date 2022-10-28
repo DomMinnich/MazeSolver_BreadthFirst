@@ -143,18 +143,18 @@ public class Maze {
     }
 
 
-    public static void main(String[] args) throws FileNotFoundException {
-        //get file from user
-        Scanner input = new Scanner(System.in);
-        System.out.println("Enter the name of the file containing the maze: ");
-        String fileName = input.nextLine();
-        File file = new File(fileName);
-        Scanner fileInput = new Scanner(file);
-        Maze maze = new Maze(fileInput);
-        System.out.println(maze.toStringA());
-        System.out.println(maze.solveMaze());
-        System.out.println(maze.toStringA());
-    }
+    // public static void main(String[] args) throws FileNotFoundException {
+    //     //get file from user
+    //     Scanner input = new Scanner(System.in);
+    //     System.out.println("Enter the name of the file containing the maze: ");
+    //     String fileName = input.nextLine();
+    //     File file = new File(fileName);
+    //     Scanner fileInput = new Scanner(file);
+    //     Maze maze = new Maze(fileInput);
+    //     System.out.println(maze.toStringA());
+    //     System.out.println(maze.solveMaze());
+    //     System.out.println(maze.toStringA());
+    // }
 }
 
 

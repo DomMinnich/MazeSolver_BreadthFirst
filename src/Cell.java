@@ -12,11 +12,13 @@ public class Cell {
     public static final int WEST = 3;
     private boolean neighbors[] = new boolean[4];
     private boolean onPath;
+    private char cellChar;
 
     public Cell() {
         for (int i = 0; i < 4; i++) {
             neighbors[i] = false;
         }
+        cellChar = ' ';
         onPath = false;
     }
 
@@ -46,64 +48,12 @@ public class Cell {
     }
 
     //set the cell char
-    public void setCellChar(char c) {
-        if (c == '|') {
-            neighbors[Cell.NORTH] = true;
-        } else if (c == '_') {
-            neighbors[Cell.WEST] = true;
-            neighbors[Cell.EAST] = true;
-        } else if (c == ' ') {
-            neighbors[Cell.NORTH] = true;
-            neighbors[Cell.SOUTH] = true;
-            neighbors[Cell.WEST] = true;
-            neighbors[Cell.EAST] = true;
-        }
+    public void setCellChar(char cellChar) {
+        this.cellChar = cellChar;
     }
 
     //get the cell char
-    //first check if it is 'start' or 'finish'
-    //then check if it is on the path
-    //then check if it is a corner
-    //then check if it is a vertical line
-    //then check if it is a horizontal line
-    //then it is a space
-    
-
-
     public char getCellChar() {
-        if (neighbors[Cell.NORTH] && neighbors[Cell.SOUTH] && neighbors[Cell.WEST] && neighbors[Cell.EAST]) {
-            return ' ';
-        } else if (neighbors[Cell.NORTH] && neighbors[Cell.SOUTH] && neighbors[Cell.WEST]) {
-            return '_';
-        } else if (neighbors[Cell.NORTH] && neighbors[Cell.SOUTH] && neighbors[Cell.EAST]) {
-            return '_';
-        } else if (neighbors[Cell.NORTH] && neighbors[Cell.SOUTH]) {
-            return '|';
-        } else if (neighbors[Cell.WEST] && neighbors[Cell.EAST]) {
-            return '_';
-        } else if (neighbors[Cell.NORTH] && neighbors[Cell.WEST]) {
-            return '_';
-        } else if (neighbors[Cell.NORTH] && neighbors[Cell.EAST]) {
-            return '_';
-        } else if (neighbors[Cell.SOUTH] && neighbors[Cell.WEST]) {
-            return '_';
-        } else if (neighbors[Cell.SOUTH] && neighbors[Cell.EAST]) {
-            return '_';
-        } else if (neighbors[Cell.NORTH]) {
-            return '|';
-        } else if (neighbors[Cell.SOUTH]) {
-            return '|';
-        } else if (neighbors[Cell.WEST]) {
-            return '_';
-        } else if (neighbors[Cell.EAST]) {
-            return '_';
-        } else {
-            return 'X';
-        }
+        return cellChar;
     }
-
-
-    
-   
-    
 }
