@@ -153,6 +153,7 @@ public class Maze {
         Maze maze = new Maze(fileInput);
         System.out.println(maze.toStringA());
         System.out.println(maze.solveMaze());
+        System.out.println(maze.toStringA());
     }
 }
 
