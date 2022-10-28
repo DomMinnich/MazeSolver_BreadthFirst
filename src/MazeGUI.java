@@ -145,8 +145,6 @@ public class MazeGUI extends Application {
         try (Scanner fileInput = new Scanner(file)) {
             Maze maze2 = new Maze(fileInput);
             System.out.println(maze2.toStringA());
-            System.out.println(maze2.solveMaze());
-            System.out.println(maze2.toStringA());
             Label label2 = new Label(maze2.toStringA());
             label2.setFont(font2);
             label2.setTextFill(Color.BLUE);

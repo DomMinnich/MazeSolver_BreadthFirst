@@ -9,13 +9,21 @@ public class SetArr<E> {
 
     public void enter(E item) {
         if (!contains(item)) {
+            //if empty
+            //if not empty and not full 
+            //if full ensure capacity
+            if(size == 0){
+                set[0] = item;
+                size++;
             if (size == set.length) {
                 ensureCapacity();
             }
             set[size] = item;
             size++;
+            }
         }
     }
+    
 
     public boolean isElement(E item) {
         for (int i = 0; i < size; i++) {
