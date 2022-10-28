@@ -24,6 +24,15 @@ public class Cell {
         neighbors[direction] = true;
     }
 
+    //getNeighbor() method
+    public Cell getNeighbor(int direction) {
+        if (neighbors[direction]) {
+            return new Cell();
+        } else {
+            return null;
+        }
+    }
+
     public boolean hasNeighbor(int direction) {
         return neighbors[direction];
     }
@@ -36,17 +45,45 @@ public class Cell {
         return onPath;
     }
 
-    public static int opposite(int direction) {
-        if (direction == NORTH) {
-            return SOUTH;
-        } else if (direction == SOUTH) {
-            return NORTH;
-        } else if (direction == EAST) {
-            return WEST;
-        } else if (direction == WEST) {
-            return EAST;
+    //getSymbol() method for 'S' and 'F' and ' ' and '_' and '|' and 'X'
+    public char getSymbol() {
+        if (onPath) {
+            return 'X';
+        } else if (neighbors[NORTH] && neighbors[SOUTH] && neighbors[EAST] && neighbors[WEST]) {
+            return ' ';
+        } else if (neighbors[NORTH] && neighbors[SOUTH] && neighbors[EAST]) {
+            return '_';
+        } else if (neighbors[NORTH] && neighbors[SOUTH] && neighbors[WEST]) {
+            return '_';
+        } else if (neighbors[NORTH] && neighbors[EAST] && neighbors[WEST]) {
+            return '|';
+        } else if (neighbors[SOUTH] && neighbors[EAST] && neighbors[WEST]) {
+            return '|';
+        } else if (neighbors[NORTH] && neighbors[SOUTH]) {
+            return '|';
+        } else if (neighbors[EAST] && neighbors[WEST]) {
+            return '_';
+        } else if (neighbors[NORTH] && neighbors[EAST]) {
+            return '/';
+        } else if (neighbors[NORTH] && neighbors[WEST]) {
+            return '\\';
+        } else if (neighbors[SOUTH] && neighbors[EAST]) {
+            return '\\';
+        } else if (neighbors[SOUTH] && neighbors[WEST]) {
+            return '/';
+        } else if (neighbors[NORTH]) {
+            return '|';
+        } else if (neighbors[SOUTH]) {
+            return '|';
+        } else if (neighbors[EAST]) {
+            return '_';
+        } else if (neighbors[WEST]) {
+            return '_';
         } else {
-            return -1;
+            return ' ';
         }
     }
+
+   
+    
 }
