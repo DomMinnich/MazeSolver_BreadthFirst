@@ -53,13 +53,26 @@ public class Maze {
         maze = new Cell[rows][cols];
         visited = new SetArr<Cell>();
         toVisit = new QueueArr<Cell>();
-        //the start is the second cell in the first row
-        
         for (int i = 0; i < rows; i++) {
             String line = input.nextLine();
             for (int j = 0; j < cols; j++) {
                 maze[i][j] = new Cell();
-                if (line.charAt(j) == '|') {
+                if (i==0 && j==1) {
+                    start = maze[i][j];
+                    start.setCellChar('S');
+                } else if (i==rows-1 && j==cols-2) {
+                    finish = maze[i][j];
+                    finish.setCellChar('F');
+                } 
+                //set the second cell in the last row to the finish
+                else if (i==rows && j==cols-1) {
+                    maze[i][j] = finish;
+                    //setchar to f
+                    maze[i][j].setCellChar('F');
+                    continue;
+                }
+               
+                else if (line.charAt(j) == '|' || j ==cols-1) {
                     if (j > 0) {
                         maze[i][j].setNeighbor(Cell.WEST);
                         maze[i][j - 1].setNeighbor(Cell.EAST);
@@ -91,18 +104,11 @@ public class Maze {
                         //set the cell char
                         maze[i][j].setCellChar(line.charAt(j));
                     }
-                } else if (line.charAt(j) == 'S') {
-                    start = maze[i][j];
-                    //set the cell char
-                    maze[i][j].setCellChar(line.charAt(j));
-                } else if (line.charAt(j) == 'F') {
-                    finish = maze[i][j];
-                    //set the cell char
-                    maze[i][j].setCellChar(line.charAt(j));
                 }
             }
         }
     }
+
 
     public boolean solveMaze() {
         toVisit.enqueue(start);
@@ -155,7 +161,7 @@ public class Maze {
         Maze maze = new Maze(fileInput);
         System.out.println(maze.toStringA());
         System.out.println(maze.solveMaze());
-        System.out.println(maze.toStringA());
+        System.out.println(maze.toStringA()+"Solved");
     }
 }
 
