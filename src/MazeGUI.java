@@ -71,51 +71,15 @@ public class MazeGUI extends Application {
         readMazesBt.setFont(font);
         readMazesBt.setMaxSize(120, 50);
         readMazesBt.setMinSize(120, 50);
-        char[][] maze = {
-                { '.', '.', '.', '0', '0', '0', '0', '0', '0', '0' },
-                { '0', '0', '.', '.', '.', '0', '.', '.', '.', '0' },
-                { '0', '0', '.', '0', '.', '0', '.', '0', '.', '0' },
-                { '.', '.', '.', '0', '.', '0', '.', '0', '.', '0' },
-                { '.', '0', '0', '0', '.', '.', '.', '0', '.', '0' },
-                { '.', '.', '.', '.', '0', '0', '0', '.', '.', '0' },
-                { '.', '0', '0', '.', '.', '.', '0', '.', '.', '0' },
-                { '.', '.', '.', '0', '0', '.', '0', '0', '.', '.' },
-                { '0', '0', '.', '0', '0', '.', '.', '.', '0', '0' },
-                { '0', '0', '0', '0', '0', '0', '0', '.', '.', '.' },
-        };
         EventHandler<ActionEvent> read = new EventHandler<ActionEvent>() {
 
             public void handle(ActionEvent e) {
 
-                // System.out.println("Please enter the name of the file containing the maze:");
-                // Scanner input = new Scanner(System.in);
-                // System.out.println("Thank you...");
-                // Maze maze = new Maze(input);
-                // maze.solve();
-                // maze.printMaze();
-                // Label mazeLabel = new Label(maze.asText());
-                // mazeLabel.setFont(font2);
-                // mazeLabel.setTextFill(Color.BLUE);
-                // scrollBarPane.getChildren().add(mazeLabel);
-
-                // Scanner input = new Scanner(System.in);
-                // Maze maze = new Maze(input);
-                // maze.solve();
-                // maze.printMaze();
-                // System.out.println(maze.hasPath());
-
+               
                 // Label r = new Label();
                 // r.setTextFill(Color.BLUE);
                 // r.setFont(font2);
-                // r.setText("-----------------------\n");
-                // for (int x = 0; x < 10; x++) {
-                // r.setText(r.getText() + "| ");
-                // for (int y = 0; y < 10; y++) {
-                // r.setText(r.getText() + maze[x][y] + " ");
-                // }
-                // r.setText(r.getText() + "|\n");
-                // }
-                // r.setText(r.getText() + "-----------------------");
+              
 
                 // scrollBarPane.getChildren().add(r);
 
