@@ -5,22 +5,24 @@ import java.util.Scanner;
 public class Maze {
     private Cell[][] maze;
     private SetArr<Cell> visited;
-    private QueueArr<Cell> toVisit;
+    private QueueArr<Cell> cellsToVisit;
     private int rows;
     private int cols;
     private Cell start;
     private Cell finish;
     int numOfMazes = 2;
-    Maze[] mazesArray = new Maze[numOfMazes];
+    SetArr<Maze> mazes[];
+    //Maze[] mazesArray = new Maze[numOfMazes];
 
     public Maze(Scanner input) {
+        visited = new SetArr<Cell>();
+        cellsToVisit = new QueueArr<Cell>();
         for (int k = 0; k < getNumMazes(); k++) {
             rows = input.nextInt();
             cols = input.nextInt();
             input.nextLine();
             maze = new Cell[rows][cols];
-            visited = new SetArr<Cell>();
-            toVisit = new QueueArr<Cell>();
+            
             for (int i = 0; i < rows; i++) {
                 String line = input.nextLine();
                 for (int j = 0; j < cols; j++) {
@@ -77,43 +79,45 @@ public class Maze {
             }
 
             // save this maze in mazesArray at index k
-            if (k == 0) {
-                mazesArray[k] = this;
-            }
-            if (k == 1) {
-                mazesArray[k] = this;
-            }
+            mazes[k] = this;
 
             System.out.println("Maze " + k + "\n" + this.toStringOne());
 
         }
         System.out.println("outter " + "\n" + this.toStringAll());
-        System.out.println(this.toStringTestIndex());
     }
 
     // public solveMaze()
-    // This method should solve the maze by finding a path from the start to the finish.
-    // When the path from start to finish is found, the method should set the cellChar of each cell in the path to 'X'
-    // The method should return true if a path is found and false if no path is found.
+    // This method should solve the maze by finding a path from the start to the
+    // finish.
+    // When the path from start to finish is found, the method should set the
+    // cellChar of each cell in the path to 'X'
+    // The method should return true if a path is found and false if no path is
+    // found.
     // The cells that have been visited should be stored in the Set<Cell> visited
-    // The cells that have not yet been visited should be stored in the Queue<Cell> toVisit
-    // Use Location class to store the row and column of the cell and get location of neighbors
+    // The cells that have not yet been visited should be stored in the Queue<Cell>
+    // cellsToVisit
+    // Use Location class to store the row and column of the cell and get location
+    // of neighbors
     // The maze has '|' as walls and are not passable
     // The maze has '_' which can be passed through going west or east
-    // The maze has ' ' which can be passed through going north or south or east or west
+    // The maze has ' ' which can be passed through going north or south or east or
+    // west
     // The maze has 'S' which is the start cell
     // The maze has 'F' which is the finish cell
 
+    public Maze(Cell2[][] maze2, Cell2 start2, Cell2 finish2) {
+    }
 
     public boolean solveMaze2() {
         System.out.println("add the start cell to the queue");
-        toVisit.enqueue(start);
+        cellsToVisit.enqueue(start);
         // while the queue is not empty
         System.out.println("while the queue is not empty");
-        while (!toVisit.isEmpty()) {
+        while (!cellsToVisit.isEmpty()) {
             // dequeue the cell
             System.out.println("dequeue the cell");
-            Cell current = toVisit.dequeue();
+            Cell current = cellsToVisit.dequeue();
             // if the cell is the finish
             System.out.println("if the cell is the finish");
             if (current == finish) {
@@ -123,76 +127,70 @@ public class Maze {
 
             }
             // if the cell is not in the visited set
-            System.out.println("if the cell is not in the visited set");
-            if (!visited.contains(current)) {
+            // System.out.println("if the cell is not in the visited set");
+            // if (!visited.contains(current)) {
                 // add the cell to the visited set
-                System.out.println("add the cell to the visited set");
                 visited.enter(current);
+                System.out.println("add the cell to the visited set");
+
+                
                 // for each neighbor of the cell
-                System.out.println("for each neighbor of the cell");
                 for (int i = 0; i < 4; i++) {
+                System.out.println("for each neighbor of the cell");
+                
                     // if the neighbor is not null
-                    System.out.println("if the neighbor is not null");
                     if (current.getNeighbor(i) != null) {
+                    System.out.println("if the neighbor is not null");
+                    
                         // if the neighbor is not in the visited set
+                        if (!visited.contains(current.getNeighbor(i))
+                         && !cellsToVisit.contains(current.getNeighbor(i))) {
                         System.out.println("if the neighbor is not in the visited set");
-                        if (!visited.contains(current.getNeighbor(i))) {
+                        
+                               
                             // add the neighbor to the queue
+                            cellsToVisit.enqueue(current.getNeighbor(i));
                             System.out.println("add the neighbor to the queue");
-                            toVisit.enqueue(current.getNeighbor(i));
+                            
+                            System.out.println(i +" this is I");
+                            
+                            System.out.println(cellsToVisit.toStringQ()+" this is the queue");
                         }
                     }
+
                 }
-            }
+            //}
+            System.out.println(cellsToVisit.toString()+"the cells to visit");
+
         }
         // replace visited cells with 'X'
-        System.out.println("replace visited cells with 'X'");
+        
         for (int i = 0; i < rows; i++) {
+          //  System.out.println("replace visited cells with 'X Rows'");
             for (int j = 0; j < cols; j++) {
+               // System.out.println("replace visited cells with 'X' Cols");
                 if (visited.contains(maze[i][j])) {
                     maze[i][j].setCellChar('X');
                 }
             }
+           
+
         }
 
         // return false
         return false;
+        
     }
 
-    public boolean solveMaze() {
-        toVisit.enqueue(start);
-        System.out.println("Step 1: Add the start cell to the queue");
-        while (!toVisit.isEmpty()) {
-            System.out.println("Step 2: Dequeue the cell");
-            Cell current = toVisit.dequeue();
-            if (current.equals(finish)) {
-                return true;
-                
-            }
-            visited.enter(current);
-            if (current.hasNeighbor(Cell.NORTH) && !visited.contains(current.getNeighbor(Cell.NORTH))) {
-                toVisit.enqueue(current.getNeighbor(Cell.NORTH));
-            }
-            if (current.hasNeighbor(Cell.SOUTH) && !visited.contains(current.getNeighbor(Cell.SOUTH))) {
-                toVisit.enqueue(current.getNeighbor(Cell.SOUTH));
-            }
-            if (current.hasNeighbor(Cell.EAST) && !visited.contains(current.getNeighbor(Cell.EAST))) {
-                toVisit.enqueue(current.getNeighbor(Cell.EAST));
-            }
-            if (current.hasNeighbor(Cell.WEST) && !visited.contains(current.getNeighbor(Cell.WEST))) {
-                toVisit.enqueue(current.getNeighbor(Cell.WEST));
-            }
-        }
-        return false;
-    }
 
     public boolean hasPath() {
-        return solveMaze();
+        return solveMaze2();
     }
 
     public String toStringOne() {
 
         String mazeString = "";
+
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 mazeString += maze[i][j].getCellChar();
@@ -202,15 +200,6 @@ public class Maze {
         return mazeString;
     }
 
-    public String toStringTestIndex() {
-        String mS = "";
-        mS += "This is toStringA index test [0]\n";
-        mS += mazesArray[0].toStringOne();
-        mS += "This is toStringA index test [1]\n";
-        mS += mazesArray[1].toStringOne();
-        return mS;
-
-    }
 
     // run through mazes array and make a string of the mazes
     public String toStringAll() {
@@ -224,6 +213,23 @@ public class Maze {
 
     }
 
+
+    public String toStringSingle() {
+
+        String mazeString = "";
+        mazeString += ""
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                mazeString += maze[i][j].getCellChar();
+            }
+            mazeString += "\n";
+        }
+        return mazeString;
+    }
+
+
+
     // how an int value of how many mazes are in the file
     public int getNumMazes() {
         return numOfMazes;
@@ -234,6 +240,8 @@ public class Maze {
         this.numOfMazes = numMazes;
     }
 
+    
+
     public static void main(String[] args) throws FileNotFoundException {
         // get file from user
         Scanner input = new Scanner(System.in);
@@ -242,20 +250,13 @@ public class Maze {
         File file = new File(fileName);
         Scanner fileInput = new Scanner(file);
         Maze maze = new Maze(fileInput);
-        // System.out.println("First toString");
-        // System.out.println(maze.toStringA());
-        // System.out.println("Second toString");
-        System.out.println("Noramal\n");
+        
         System.out.println(maze.toStringAll());
-        maze.solveMaze();
-        System.out.println("Solved\n");
-        System.out.println(maze.toStringOne());
-        System.out.println("has path 1");
-        System.out.println(maze.hasPath());
         maze.solveMaze2();
         System.out.println("Solved2\n");
         System.out.println(maze.toStringOne());
         System.out.println("has path");
         System.out.println(maze.hasPath());
+        System.out.println(maze.toStringAll());
     }
 }

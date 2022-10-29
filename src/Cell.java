@@ -11,9 +11,10 @@ public class Cell {
         for (int i = 0; i < 4; i++) {
             neighbors[i] = false;
         }
-        cellChar = '|'; ///////////////////////// try | see what happens
+        cellChar = '|'; 
         onPath = false;
     }
+    
 
     public void setNeighbor(int direction) {
         neighbors[direction] = true;
@@ -49,4 +50,5 @@ public class Cell {
     public char getCellChar() {
         return cellChar;
     }
+
 }

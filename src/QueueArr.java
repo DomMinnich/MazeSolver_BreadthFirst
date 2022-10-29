@@ -55,4 +55,13 @@ public class QueueArr<E> {
         return false;
     }
 
+    //toString
+    public String toStringQ() {
+        String result = "";
+        for (int i = 0; i < size; i++) {
+            result += queue[(front + i) % queue.length] + " ";
+        }
+        return result;
+    }
+
 }
