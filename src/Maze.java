@@ -87,26 +87,23 @@ public class Maze {
             System.out.println("Maze " + k + "\n" + this.toStringOne());
 
         }
-
         System.out.println("outter " + "\n" + this.toStringAll());
         System.out.println(this.toStringTestIndex());
     }
 
     // public solveMaze()
-    // This method should solve the maze by finding a path from the start to the
-    // finish.
-    // When the path from start to finish is found, the method should set the
-    // cellChar of each cell in the path to 'X'
-    // The method should return true if a path is found and false if no path is
-    // found.
+    // This method should solve the maze by finding a path from the start to the finish.
+    // When the path from start to finish is found, the method should set the cellChar of each cell in the path to 'X'
+    // The method should return true if a path is found and false if no path is found.
     // The cells that have been visited should be stored in the Set<Cell> visited
-    // The cells that have not yet been visited should be stored in the Queue<Cell>
-    // toVisit
-    // Use Location class to store the row and column of the cell
+    // The cells that have not yet been visited should be stored in the Queue<Cell> toVisit
+    // Use Location class to store the row and column of the cell and get location of neighbors
     // The maze has '|' as walls and are not passable
     // The maze has '_' which can be passed through going west or east
-    // The maze has ' ' which can be passed through going north or south or east or
-    // west
+    // The maze has ' ' which can be passed through going north or south or east or west
+    // The maze has 'S' which is the start cell
+    // The maze has 'F' which is the finish cell
+
 
     public boolean solveMaze2() {
         System.out.println("add the start cell to the queue");
@@ -170,6 +167,7 @@ public class Maze {
             Cell current = toVisit.dequeue();
             if (current.equals(finish)) {
                 return true;
+                
             }
             visited.enter(current);
             if (current.hasNeighbor(Cell.NORTH) && !visited.contains(current.getNeighbor(Cell.NORTH))) {
@@ -247,6 +245,17 @@ public class Maze {
         // System.out.println("First toString");
         // System.out.println(maze.toStringA());
         // System.out.println("Second toString");
+        System.out.println("Noramal\n");
         System.out.println(maze.toStringAll());
+        maze.solveMaze();
+        System.out.println("Solved\n");
+        System.out.println(maze.toStringOne());
+        System.out.println("has path 1");
+        System.out.println(maze.hasPath());
+        maze.solveMaze2();
+        System.out.println("Solved2\n");
+        System.out.println(maze.toStringOne());
+        System.out.println("has path");
+        System.out.println(maze.hasPath());
     }
 }
