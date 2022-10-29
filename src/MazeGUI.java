@@ -1,9 +1,8 @@
 
-//Updated 10/27/2022 5:37pm R
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.Scanner;
-
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -15,6 +14,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
@@ -25,9 +25,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class MazeGUI extends Application {
+
     public void start(Stage primaryStage) throws Exception {
 
         // Main Font
@@ -47,6 +49,19 @@ public class MazeGUI extends Application {
         ScrollPane scrollBar = new ScrollPane(scrollBarPane);
         scrollBar.setMaxSize(1100, 600);
         scrollBar.setMinSize(1100, 600);
+        Text sl = new Text(
+                "------------------------------------------------------------------------------" +
+                        "------------------------------------------------------------------------------" +
+                        "------------------------------------------------------------------------------" +
+                        "------------------------------------------------------------------------------" +
+                        "------------------------------------------------------------------------------" +
+                        "---------------------\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|" +
+                        "\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|" +
+                        "\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|" +
+                        "\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|");
+        sl.setFont(font);
+        sl.setFill(Color.WHITE);
+        scrollBarPane.getChildren().add(sl);
 
         //////////////////// ComboBox ////////////////////
         Text mazeSelectionCBoxTitle = new Text("Maze Selection");
@@ -58,12 +73,11 @@ public class MazeGUI extends Application {
         ComboBox<String> mazeSelectionCBox = new ComboBox<String>();
         mazeSelectionCBox.setMaxSize(120, 50);
         mazeSelectionCBox.setMinSize(120, 50);
-        mazeSelectionCBox.getItems().addAll("1\'st Maze", "2\'nd Maze", "3\'rd Maze", "4\'th Maze", "5\'th Maze");
+        mazeSelectionCBox.getItems().addAll("1\'st Maze", "2\'nd Maze", "3\'rd Maze", "4\'th Maze", "5\'th Maze",
+                "6\'th Maze", "7\'th Maze", "8\'th Maze", "9\'th Maze", "10\'th Maze");
         mazeSelectionCBox.getSelectionModel().selectFirst();
         mazeSelectionCBox.setOnAction(e -> {
-
             // TODO: Retrieve the selected maze and display it after read in
-
         });
 
         //////////////////// Read Button ////////////////////
@@ -72,26 +86,34 @@ public class MazeGUI extends Application {
         readMazesBt.setMaxSize(120, 50);
         readMazesBt.setMinSize(120, 50);
         EventHandler<ActionEvent> read = new EventHandler<ActionEvent>() {
-
             public void handle(ActionEvent e) {
+                TextInputDialog numOfMazes = new TextInputDialog("5");
+                numOfMazes.setTitle("Number of Mazes");
+                numOfMazes.setHeaderText("Enter The Number of Mazes To Be Read In");
+                numOfMazes.setContentText("Number of Mazes:");
+                numOfMazes.showAndWait();
+                // right now broken because maze variable is null (scanner)
+                // Maze maze = new Maze(null);
+                // int mazesAmount = Integer.parseInt(numOfMazes.getResult());
+                // maze.setNumMazes(mazesAmount);
 
-               
-                // Label r = new Label();
-                // r.setTextFill(Color.BLUE);
-                // r.setFont(font2);
-              
-
-                // scrollBarPane.getChildren().add(r);
-
-                // // TODO: Read Mazes
-                // Text example = new Text(
-                // "1\n2\n3\n4\n5\n6\n1\n2\n3\n4\n5\n6\n1\n2\n3\n4\n5\n6\n1\n2\n3\n4\n5\n6\n1\n2\n3\n4\n5\n6\n1\n2\n3\n4\n5\n6\n1\n2\n3\n4\n5\n6\n1\n2\n3\n4\n5\n6\n1\n2\n3\n4\n5\n6\n1\n2\n3\n4\n5\n6\n1\n2\n3\n4\n5\n6\n1\n2\n3\n4\n5\n6\n1\n2\n3\n4\n5\n612345678901234567890123456789012345678901234567891234567890123456789012345678901234567890123456789123456789012345678901234567890123456789012345678912345678901234567890123456789012345678901234567891234567890123456789012345678901234567890123456789123456789012345678901234567890123456789012345678912345678901234567890123456789012345678901234567891234567890123456789012345678901234567890123456789123456789012345678901234567890123456789012345678912345678901234567890123456789012345678901234567891234567890123456789012345678901234567890123456789123456789012345678901234567890123456789012345678912345678901234567890123456789012345678901234567891234567890123456789012345678901234567890123456789123456789012345678901234567890123456789012345678912345678901234567890123456789012345678901234567891234567890123456789012345678901234567890123456789123456789012345678901234567890123456789012345678912345678901234567890123456789012345678901234567891234567890123456789012345678901234567890123456789123456789012345678901234567890123456789012345678912345678901234567890123456789012345678901234567891234567890123456789012345678901234567890123456789123456789012345678901234567890123456789012345678912345678901234567890123456789012345678901234567891234567890123456789012345678901234567890123456789123456789012345678901234562345678901234567890123456789\n1\n2\n3\n4\n5\n6\n1\n2\n3\n4\n5\n6\n1\n2\n3\n4\n5\n6\n1\n2\n3\n4\n5\n6\n1\n2\n3\n4\n5\n6\n1\n2\n3\n4\n5\n6\n1\n2\n3\n4\n5\n6\n1\n2\n3\n4\n5\n6\n1\n2\n3\n4\n5\n6\n1\n2\n3\n4\n5\n6\n1\n2\n3\n4\n5\n6\n1\n2\n3\n4\n5\n6\n");
-                // example.setFont(font);
-                // scrollBarPane.getChildren().add(example);
-
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Save File");
+                // fileChooser.setInitialFileName(fName);
+                File file = fileChooser.showOpenDialog(null);
+                try (Scanner fileInput = new Scanner(file)) {
+                    Maze maze = new Maze(fileInput);
+                    System.out.println(maze.toStringAll());
+                    Label label2 = new Label(maze.toStringAll());
+                    label2.setFont(font2);
+                    label2.setTextFill(Color.BLUE);
+                    scrollBarPane.getChildren().add(label2);
+                } catch (FileNotFoundException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
             }
         };
-
         readMazesBt.setOnAction(read);
 
         //////////////////// Find Path Single ////////////////////
@@ -102,25 +124,8 @@ public class MazeGUI extends Application {
         EventHandler<ActionEvent> findPathSingle = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 // TODO: Find path of the current single maze
-                Scanner input = new Scanner(System.in);
-        System.out.println("Enter the name of the file containing the maze: ");
-        String fileName = input.nextLine();
-        File file = new File(fileName);
-        try (Scanner fileInput = new Scanner(file)) {
-            Maze maze2 = new Maze(fileInput);
-            System.out.println(maze2.toStringA());
-            Label label2 = new Label(maze2.toStringA());
-            label2.setFont(font2);
-            label2.setTextFill(Color.BLUE);
-            scrollBarPane.getChildren().add(label2);
-        } catch (FileNotFoundException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
-        
             }
         };
-        
         findPathSingleBt.setOnAction(findPathSingle);
 
         //////////////////// Find Path All ////////////////////
@@ -131,10 +136,8 @@ public class MazeGUI extends Application {
         EventHandler<ActionEvent> findPathAll = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 // TODO: Find path of all the mazes
-
             }
         };
-
         findPathAllBt.setOnAction(findPathAll);
 
         //////////////////// Write Mazes ////////////////////
@@ -144,11 +147,18 @@ public class MazeGUI extends Application {
         writeMazesBt.setMinSize(120, 50);
         EventHandler<ActionEvent> write = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
-                // TODO: Write Mazes to file
-
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Save File");
+                // fileChooser.setInitialFileName(fName);
+                File file = fileChooser.showSaveDialog(null);
+                try (PrintWriter fOut = new PrintWriter(file)) {
+                    // Also print the row and column numbers of the maze
+                    // fOut.print(maze.toStringAll());
+                } catch (FileNotFoundException e1) {
+                    e1.printStackTrace();
+                }
             }
         };
-
         writeMazesBt.setOnAction(write);
 
         /////////////////////////// Quit Button ///////////////////////////

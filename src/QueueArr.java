@@ -1,4 +1,3 @@
-//Updated 10/27/2022 5:37pm R
 public class QueueArr<E> {
     private E[] queue;
     private int size;
@@ -47,7 +46,6 @@ public class QueueArr<E> {
         rear = size;
     }
 
-    // contains method
     public boolean contains(E item) {
         for (int i = 0; i < size; i++) {
             if (queue[(front + i) % queue.length].equals(item)) {

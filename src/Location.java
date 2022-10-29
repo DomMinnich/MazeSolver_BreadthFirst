@@ -1,10 +1,3 @@
-//Updated 10/27/2022 5:37pm R
-//int row and column are the tow and column numbers of a Cell
-//public method setPrevious(Location previous) sets the pointer back to the previous Location
-//public method previous() Returns a pointer to the previous Location
-//public method getLocation(int direction) This method returns a Location object with the coordinates of an adjacent cell in the specified direction
-//public method equals(Object other) This method returns true if the two Locations are equal, false otherwise
-
 public class Location {
     private int row;
     private int col;

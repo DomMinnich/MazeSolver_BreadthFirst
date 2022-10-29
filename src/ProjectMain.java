@@ -1,5 +1,4 @@
 
-//Updated 10/27/2022 5:37pm R
 import javafx.application.Application;
 
 public class ProjectMain {

@@ -1,6 +1,6 @@
 public class SetArr<E> {
     private E[] set;
-    private int size =1;
+    private int size = 1;
 
     public SetArr() {
         set = (E[]) new Object[size];
@@ -14,7 +14,6 @@ public class SetArr<E> {
         set[size] = item;
         size++;
     }
-
 
     public boolean isElement(E item) {
         for (int i = 0; i < size; i++) {
@@ -68,6 +67,16 @@ public class SetArr<E> {
             }
         }
         return false;
+    }
+
+    // retreive method
+    public E retreive(E item) {
+        for (int i = 0; i < size; i++) {
+            if (set[i].equals(item)) {
+                return set[i];
+            }
+        }
+        return null;
     }
 
 }
