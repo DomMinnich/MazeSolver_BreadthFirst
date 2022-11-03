@@ -1,7 +1,7 @@
 public class Location {
     private int row;
     private int col;
-    private Location previous;
+    public Location previous;
 
     public Location(int row, int col) {
         this.row = row;

@@ -1,6 +1,6 @@
 public abstract class MazeRunner {
-    Maze2 maze;
-    SetArr<Cell2> pathTaken;
+    protected Maze2 maze;
+    protected SetArr<Cell2> pathTaken;
     protected Cell2 start;
     protected Cell2 finish;
 
@@ -10,9 +10,19 @@ public abstract class MazeRunner {
         finish = this.finish;
         pathTaken = new SetArr<Cell2>();
 
-    
+    }
+
+    public MazeRunner(Maze2 maze2, Cell2 start, Cell2 finish) {
+        this.maze = maze2;
+        start = this.start;
+        finish = this.finish;
+        pathTaken = new SetArr<Cell2>();
     }
 
     abstract boolean runMaze();
+
+    public String mazeToString(){
+        return maze.toString();
+    }
 
 }

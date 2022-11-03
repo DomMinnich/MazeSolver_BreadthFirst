@@ -16,10 +16,9 @@ public class Cell2 {
     Cell2 westNeighbor = null;
 
     public boolean hasWallNorth() {
-        if (location.getCol() == 0) {
+        if(this.northNeighbor==null){
             return true;
         }
-
         return northNeighbor.hasWallSouth();
     }
 
@@ -34,10 +33,10 @@ public class Cell2 {
     }
 
     public boolean hasWallWest() {
-        if (location.getRow() == 0) {
+        if (this.westNeighbor == null) {
             return true;
         }
-        return westNeighbor.hasWallSouth();
+        return westNeighbor.hasWallEast();
 
     }
 
@@ -49,8 +48,7 @@ public class Cell2 {
         this.isWallS = isWallS;
     }
 
-    // getNeighborLocation() method
-    public Location[] getNeighborLocations() {
+    public Location[] getAccessibleNeighborLocations() {
         Location[] neighborLocations = new Location[getNeighborsNum()];
         int currentNeightborNum = 0;
 
@@ -91,22 +89,6 @@ public class Cell2 {
         return neighborsNum;
     }
 
-    public String toStringEast() {
-        if (hasWallEast()) {
-            return "|";
-        } else {
-            return " ";
-        }
-    }
-
-    public String toStringSouth() {
-        if (hasWallSouth()) {
-            return "-";
-        } else {
-            return " ";
-        }
-    }
-
     public void setNorthNeighbor(Cell2 northNeighbor) {
         this.northNeighbor = northNeighbor;
     }
@@ -123,5 +105,42 @@ public class Cell2 {
         return westNeighbor;
     }
 
+    public String toStringEast() {
+        if (hasWallEast()) {
+            return "|";
+        } else {
+            return " ";
+        }
+    }
+
+    public String toStringSouth() {
+        if (hasWallSouth()) {
+            return "_";
+        } else {
+            return " ";
+        }
+    }
+
+    public String toString() {
+        return toStringSouth() + toStringEast();
+    }
+
+    public String toString(String substitute) {
+
+        return substitute + toStringEast();
+
+    }
+
+    // public String toStringPath(){
+    // return toStringSouth()+toStringSouthPath();
+    // }
+
+    // private String toStringSouthPath() {
+    // return "X";
+    // }
+
+    public boolean equals(Cell2 otherCell) {
+        return location.equals(otherCell.location);
+    }
 
 }

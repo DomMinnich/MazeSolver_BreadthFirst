@@ -2,6 +2,8 @@ import java.util.Scanner;
 
 public class Maze2 {
     private Cell2[][] maze;
+    Cell2 start;
+    Cell2 finish;
 
     public Maze2(Cell2[][] maze2) {
         maze = maze2;
@@ -11,25 +13,24 @@ public class Maze2 {
         int rows = input.nextInt();
         int cols = input.nextInt();
         input.nextLine();
+        input.nextLine();
         Cell2[][] maze2 = new Cell2[rows][cols];
-         Maze2  temp =new Maze2(maze2);
-
-      
-        for (int i = 0; i < rows-3; i++) {
+        Maze2 temp = new Maze2(maze2);
+        for (int i = 0; i < rows; i++) {
             String line1 = input.nextLine();
-            String line2 = input.nextLine();
-             System.out.println(line1 + "\n" + line2);
+           // System.out.println(line1 + " line1");
             for (int j = 0; j < cols; j++) {
                 Location loc = new Location(i, j);
-
-                Boolean southWall = line2.charAt(j * 2 + 2) == '_';
-                Boolean eastWall = line1.charAt(j * 2 + 1) == '|';
-                temp.setCell(loc, southWall, eastWall);
+                Boolean eastWall = line1.charAt(j * 2 + 2) == '|';
+                Boolean southWall = line1.charAt(j * 2 + 1) == '_';
+            //    System.out.println("tried to create cell");
+             //   System.out.println("eastWall: " + eastWall + "southWall: " + southWall + "loc: " + loc);
+                temp.setCell(loc, eastWall, southWall);
             }
         }
-        maze =temp.maze;
-    }
+        maze = temp.maze;
 
+    }
 
     public Cell2 getCellAtLocation(Location location) {
         return maze[location.getRow()][location.getCol()];
@@ -43,24 +44,30 @@ public class Maze2 {
         return cells;
     }
 
-    public String toStringM() {
+    public String toString() {
+        return toString(new SetArr<Cell2>());
+
+    }
+
+    public String toString(SetArr<Cell2> pathTaken) {
         String mazeString = "   ";
-        for (int i = 0; i < maze.length; i++) {
-            mazeString += i + "__";
+        System.out.println(pathTaken.size()+" pathTaken.size()");
+        for (int i = 0; i < maze[0].length - 1; i++) {
+            mazeString += "_ ";
         }
         mazeString += "\n";
 
         for (int i = 0; i < maze.length; i++) {
             mazeString += "|";
             for (int j = 0; j < maze[i].length; j++) {
-               // System.out.println("i: " + i + " j: " + j);
-                System.out.println(mazeString);
-                mazeString += " " + maze[i][j].toStringEast();
-            }
-
-            mazeString += "\n";
-            for (int j = 0; j < maze[i].length; j++) {
-                mazeString += maze[i][j].toStringSouth() + " ";
+                // System.out.println("i: " + i + " j: " + j);
+                // System.out.println(mazeString);
+                if (pathTaken.contains(maze[i][j])) {
+                    mazeString += maze[i][j].toString("x");
+                    
+                } else {
+                    mazeString += maze[i][j].toString();
+                }
             }
             mazeString += "\n";
         }
@@ -69,15 +76,18 @@ public class Maze2 {
 
     public void setCell(Location location, Cell2 north, Cell2 west, boolean eastWall, boolean southWall) {
         maze[location.getRow()][location.getCol()] = new Cell2(location, north, west, eastWall, southWall);
+        System.out.println("within setCell");
         if (location.getRow() < maze.length) {
             maze[location.getRow() + 1][location.getCol()].setNorthNeighbor(maze[location.getRow()][location.getCol()]);
+            System.out.println("Attempted first");
         }
         if (location.getCol() < maze[0].length) {
             maze[location.getRow()][location.getCol() + 1].setWestNeighbor(maze[location.getRow()][location.getCol()]);
+            System.out.println("Attempted");
         }
 
-
     }
+
     public void setCell(Location location, boolean eastWall, boolean southWall) {
         Cell2 cell = getCellAtLocation(location);
         Cell2 north = null;
@@ -90,6 +100,22 @@ public class Maze2 {
         }
         maze[location.getRow()][location.getCol()] = new Cell2(location, north, west, eastWall, southWall);
 
+    }
+
+    public int getRows() {
+        return maze.length;
+    }
+
+    public int getCols() {
+        return maze[0].length;
+    }
+
+    public Cell2 getStart() {
+        return getCellAtLocation(new Location(0, 0));
+    }
+
+    public Cell2 getFinish() {
+        return getCellAtLocation(new Location(getRows() - 1, getCols() - 1));
     }
 
 }
