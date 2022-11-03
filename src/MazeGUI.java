@@ -34,14 +34,15 @@ public class MazeGUI extends Application {
     private File file;
     public static int mazeSelected = 1;
     public int mazeCount = 1;
+    boolean solveAll = false;
 
-    //set mazeSelected method
+    // set mazeSelected method
     public static void setMazeSelected(int mazeSelected) {
         MazeGUI.mazeSelected = mazeSelected;
-        
+
     }
 
-    //get mazeSelected method
+    // get mazeSelected method
     public static int getMazeSelected() {
         return mazeSelected;
     }
@@ -90,6 +91,16 @@ public class MazeGUI extends Application {
         ScrollPane scrollBar = new ScrollPane(scrollBarPane);
         scrollBar.setMaxSize(1100, 600);
         scrollBar.setMinSize(1100, 600);
+
+        // start
+        Label st = new Label("Click \"Read Mazes\" To Find Your Maze File\n\n\t\tEnjoy!");
+        st.setFont(font2);
+        st.setTextFill(Color.GREEN);
+        st.setTranslateX(200);
+        st.setTranslateY(200);
+        scrollBarPane.getChildren().add(st);
+
+        // For the scroll bars to appear
         Text sl = new Text(
                 "------------------------------------------------------------------------------" +
                         "------------------------------------------------------------------------------" +
@@ -105,7 +116,8 @@ public class MazeGUI extends Application {
         scrollBarPane.getChildren().add(sl);
 
         //////////////////// Read Button ////////////////////
-        Button readMazesBt = new Button("Read Memos");
+        Button readMazesBt = new Button("Read Mazes");
+        readMazesBt.setStyle("-fx-text-fill: green");
         readMazesBt.setFont(font);
         readMazesBt.setMaxSize(120, 50);
         readMazesBt.setMinSize(120, 50);
@@ -156,22 +168,12 @@ public class MazeGUI extends Application {
                 label3.setFont(font2);
                 label3.setTextFill(Color.BLUE);
                 scrollBarPane.getChildren().add(label3);
+                Image image = new Image(new FileInputStream());
+                scrollBarPane.getChildren().add(new ImageView(image));
 
             }
         };
         findPathSingleBt.setOnAction(findPathSingle);
-
-        //////////////////// Find Path All ////////////////////
-        Button findPathAllBt = new Button("Find Path (All)");
-        findPathAllBt.setFont(font);
-        findPathAllBt.setMaxSize(120, 50);
-        findPathAllBt.setMinSize(120, 50);
-        EventHandler<ActionEvent> findPathAll = new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent e) {
-                // TODO: Find path of all the mazes
-            }
-        };
-        findPathAllBt.setOnAction(findPathAll);
 
         //////////////////// Write Mazes ////////////////////
         Button writeMazesBt = new Button("Write Mazes");
@@ -195,11 +197,11 @@ public class MazeGUI extends Application {
         writeMazesBt.setOnAction(write);
 
         /////////////////////////// Quit Button ///////////////////////////
-        Button quitMemoBt = new Button("Quit");
-        quitMemoBt.setFont(font);
-        quitMemoBt.setMaxSize(120, 50);
-        quitMemoBt.setMinSize(120, 50);
-        quitMemoBt.setOnAction(e -> {
+        Button quitBt = new Button("Quit");
+        quitBt.setFont(font);
+        quitBt.setMaxSize(120, 50);
+        quitBt.setMinSize(120, 50);
+        quitBt.setOnAction(e -> {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Do you really want to close this application?",
                     ButtonType.YES, ButtonType.NO);
             ButtonType result = alert.showAndWait().orElse(ButtonType.NO);
@@ -236,6 +238,14 @@ public class MazeGUI extends Application {
                 try (Scanner fileInput = new Scanner(getFile())) {
                     maze = new Maze2(fileInput);
                     maze.setMaze(maze);
+                    BreadthFirstMazeRunner runner = new BreadthFirstMazeRunner(maze, maze.getStart(), maze.getFinish());
+                    runner.runMaze();
+                    if (solveAll == true) {
+                        Label label4 = new Label(maze.toString(runner.pathTaken));
+                        label4.setFont(font2);
+                        label4.setTextFill(Color.BLUE);
+                        scrollBarPane.getChildren().add(label4);
+                    }
                     Label label4 = new Label(maze.toString());
                     label4.setFont(font2);
                     label4.setTextFill(Color.BLUE);
@@ -246,10 +256,30 @@ public class MazeGUI extends Application {
             }
         });
 
+        //////////////////// Find Path All ////////////////////
+        Button findPathAllBt = new Button("Find Path (All)");
+        findPathAllBt.setFont(font);
+        findPathAllBt.setMaxSize(120, 50);
+        findPathAllBt.setMinSize(120, 50);
+        EventHandler<ActionEvent> findPathAll = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                solveAll = true;
+                findPathAllBt.setTextFill(Color.RED);
+                mazeSelectionCBox.getSelectionModel().clearSelection();
+                Label label5 = new Label("Pick A Solved Maze To View");
+                label5.setFont(font2);
+                label5.setTextFill(Color.BLUE);
+                scrollBarPane.getChildren().clear();
+                scrollBarPane.getChildren().add(sl);
+                scrollBarPane.getChildren().add(label5);
+            }
+        };
+        findPathAllBt.setOnAction(findPathAll);
+
         // Stage Configuration
         vbTop.getChildren().addAll(mazeSelectionCBoxTitle, mazeSelectionCBox);
         vbTop.setPadding(new Insets(20, 10, 250, 10));
-        vbBottom.getChildren().addAll(readMazesBt, findPathSingleBt, findPathAllBt, writeMazesBt, quitMemoBt);
+        vbBottom.getChildren().addAll(readMazesBt, findPathSingleBt, findPathAllBt, writeMazesBt, quitBt);
         vbBottom.setPadding(new Insets(0, 10, 0, 10));
         vb.getChildren().addAll(vbTop, vbBottom);
         hb.getChildren().addAll(scrollBar, vb);
