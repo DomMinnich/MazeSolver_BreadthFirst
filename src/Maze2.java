@@ -5,16 +5,40 @@ public class Maze2 {
     Cell2 start;
     Cell2 finish;
     SetArr<Maze2> mazesArr = new SetArr<Maze2>();
+    int rows;
+    int cols;
+
+    int mazeCount = MazeGUI.mazeCount;
 
     public Maze2(Cell2[][] maze2) {
         maze = maze2;
     }
 
     public Maze2(Scanner input) {
-        int rows = input.nextInt();
-        int cols = input.nextInt();
-        input.nextLine();
-        input.nextLine();
+        // get mazeCount from MazeGUI class
+        System.out.println("Maze Count: " + mazeCount);
+
+        if (mazeCount == 1) {
+            rows = input.nextInt();
+            cols = input.nextInt();
+            input.nextLine();
+            input.nextLine();
+        } else {
+            // mazeCount = mazeCount*2-3;
+            // for (int i = 0; i < mazeCount; i++) {
+
+            // input.nextInt();
+            // i++;
+            // }
+
+             input.nextInt();
+             input.nextInt();
+            rows = input.nextInt();
+            cols = input.nextInt();
+            input.nextLine();
+            input.nextLine();
+        }
+
         Cell2[][] maze2 = new Cell2[rows][cols];
         Maze2 temp = new Maze2(maze2);
         for (int i = 0; i < rows; i++) {

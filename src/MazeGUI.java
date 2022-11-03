@@ -31,6 +31,15 @@ import javafx.stage.Stage;
 public class MazeGUI extends Application {
 
     private Maze2 maze;
+    public static int mazeCount = 1;
+
+    public void setMazeCount(int mazeCount) {
+        this.mazeCount = mazeCount;
+    }
+
+    public int getMazeCount() {
+        return mazeCount;
+    }
 
     public File getF() {
         FileChooser fileChooser = new FileChooser();
@@ -97,11 +106,14 @@ public class MazeGUI extends Application {
         EventHandler<ActionEvent> read = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 scrollBarPane.getChildren().clear();
+                scrollBarPane.getChildren().add(sl);
                 TextInputDialog numOfMazes = new TextInputDialog("5");
                 numOfMazes.setTitle("Number of Mazes");
                 numOfMazes.setHeaderText("Enter The Number of Mazes To Be Read In");
                 numOfMazes.setContentText("Number of Mazes:");
                 numOfMazes.showAndWait();
+                //set mazeCount to the number of mazes to be read in
+                setMazeCount(Integer.parseInt(numOfMazes.getEditor().getText()));
 
                 try (Scanner fileInput = new Scanner(getF())) {
                     // maze = maze.getMaze();
@@ -127,6 +139,7 @@ public class MazeGUI extends Application {
         EventHandler<ActionEvent> findPathSingle = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 scrollBarPane.getChildren().clear();
+                scrollBarPane.getChildren().add(sl);
                 maze = maze.getMaze();
                 BreadthFirstMazeRunner runner = new BreadthFirstMazeRunner(maze, maze.getStart(), maze.getFinish());
                 runner.runMaze();
