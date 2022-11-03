@@ -1,4 +1,4 @@
-public abstract class MazeRunner {
+public abstract class MazeRunner {// 1
     protected Maze2 maze;
     protected SetArr<Cell2> pathTaken;
     protected Cell2 start;
@@ -21,7 +21,7 @@ public abstract class MazeRunner {
 
     abstract boolean runMaze();
 
-    public String mazeToString(){
+    public String mazeToString() {
         return maze.toString();
     }
 

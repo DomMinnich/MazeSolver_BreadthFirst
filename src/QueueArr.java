@@ -1,4 +1,4 @@
-public class QueueArr<E> {
+public class QueueArr<E> {// 1
     private E[] queue;
     private int size;
     private int front;
@@ -20,9 +20,9 @@ public class QueueArr<E> {
         size++;
     }
 
-    public void enqueue(Cell2 item, Location loc){
+    public void enqueue(Cell2 item, Location loc) {
 
-        if (item.location.previous == null){
+        if (item.location.previous == null) {
             item.location.previous = loc;
         }
         enqueue((E) item);
@@ -63,7 +63,7 @@ public class QueueArr<E> {
         return false;
     }
 
-    //toString
+    // toString
     public String toStringQ() {
         String result = "";
         for (int i = 0; i < size; i++) {

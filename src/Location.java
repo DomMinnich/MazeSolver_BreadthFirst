@@ -1,4 +1,4 @@
-public class Location {
+public class Location {// 1
     private int row;
     private int col;
     public Location previous;

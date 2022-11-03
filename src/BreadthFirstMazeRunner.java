@@ -1,4 +1,4 @@
-import java.io.File;
+import java.io.File;//1
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
@@ -14,14 +14,14 @@ public class BreadthFirstMazeRunner extends MazeRunner {
         System.out.println("start" + start);
         System.out.println("finish" + finish);
         System.out.println("add the start cell to the queue");
-        enqueuedCells.enqueue(start, new Location (0,0));
+        enqueuedCells.enqueue(start, new Location(0, 0));
         // while the queue is not empty
         System.out.println("while the queue is not empty");
         while (!enqueuedCells.isEmpty()) {
             count++;
             // dequeue the cell
 
-           // System.out.println("dequeue the cell");
+            // System.out.println("dequeue the cell");
             Cell2 current = enqueuedCells.dequeue();
 
             visitedCells.enter(current);
@@ -34,8 +34,8 @@ public class BreadthFirstMazeRunner extends MazeRunner {
                     pathSolved.enter(current);
                     current = maze.getCellAtLocation(current.location.previous);
 
-
                 }
+                pathSolved.enter(current);
                 pathTaken = pathSolved;
                 return true;
 
@@ -82,15 +82,22 @@ public class BreadthFirstMazeRunner extends MazeRunner {
         String fileName = input.nextLine();
         File file = new File(fileName);
         Scanner fileInput = new Scanner(file);
-        Maze2 maze = new Maze2(fileInput);
-        System.out.println("printing maze");
-        System.out.println(maze.toString());
+        int num = fileInput.nextInt();
+        System.out.println("Number = " + num);
+        int num2 = fileInput.nextInt();
+        System.out.println("Number = " + num2);
+        int num3 = fileInput.nextInt();
+        System.out.println("Number = " + num3);
+
+        // Maze2 maze = new Maze2(fileInput);
+        // System.out.println("printing maze");
+        // System.out.println(maze.toString());
 
         // BreadthFirstMazeRunner runner = new BreadthFirstMazeRunner(maze,
-        // maze.getCellAtLocation(new Location(0, 0)), maze.getFinish());
-        BreadthFirstMazeRunner runner = new BreadthFirstMazeRunner(maze, maze.getStart(), maze.getFinish());
-        runner.runMaze();
-        System.out.println(runner.pathTaken.toString() + "setArr path");
-        System.out.println(maze.toString(runner.pathTaken));
+        // maze.getStart(), maze.getFinish());
+        // runner.runMaze();
+        // System.out.println(runner.pathTaken.toString() + "setArr path");
+        // System.out.println(maze.toString(runner.pathTaken));
     }
+
 }

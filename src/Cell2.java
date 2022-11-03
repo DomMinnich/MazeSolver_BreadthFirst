@@ -1,4 +1,4 @@
-public class Cell2 {
+public class Cell2 {// 1
 
     public static final int NORTH = 0;
     public static final int SOUTH = 1;
@@ -16,7 +16,7 @@ public class Cell2 {
     Cell2 westNeighbor = null;
 
     public boolean hasWallNorth() {
-        if(this.northNeighbor==null){
+        if (this.northNeighbor == null) {
             return true;
         }
         return northNeighbor.hasWallSouth();

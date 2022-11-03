@@ -1,9 +1,10 @@
-import java.util.Scanner;
+import java.util.Scanner; //1
 
 public class Maze2 {
     private Cell2[][] maze;
     Cell2 start;
     Cell2 finish;
+    SetArr<Maze2> mazesArr = new SetArr<Maze2>();
 
     public Maze2(Cell2[][] maze2) {
         maze = maze2;
@@ -18,17 +19,19 @@ public class Maze2 {
         Maze2 temp = new Maze2(maze2);
         for (int i = 0; i < rows; i++) {
             String line1 = input.nextLine();
-           // System.out.println(line1 + " line1");
+            // System.out.println(line1 + " line1");
             for (int j = 0; j < cols; j++) {
                 Location loc = new Location(i, j);
                 Boolean eastWall = line1.charAt(j * 2 + 2) == '|';
                 Boolean southWall = line1.charAt(j * 2 + 1) == '_';
-            //    System.out.println("tried to create cell");
-             //   System.out.println("eastWall: " + eastWall + "southWall: " + southWall + "loc: " + loc);
+                // System.out.println("tried to create cell");
+                // System.out.println("eastWall: " + eastWall + "southWall: " + southWall +
+                // "loc: " + loc);
                 temp.setCell(loc, eastWall, southWall);
             }
         }
         maze = temp.maze;
+        mazesArr.enter(temp);
 
     }
 
@@ -51,7 +54,7 @@ public class Maze2 {
 
     public String toString(SetArr<Cell2> pathTaken) {
         String mazeString = "   ";
-        System.out.println(pathTaken.size()+" pathTaken.size()");
+        System.out.println(pathTaken.size() + " pathTaken.size()");
         for (int i = 0; i < maze[0].length - 1; i++) {
             mazeString += "_ ";
         }
@@ -64,7 +67,7 @@ public class Maze2 {
                 // System.out.println(mazeString);
                 if (pathTaken.contains(maze[i][j])) {
                     mazeString += maze[i][j].toString("x");
-                    
+
                 } else {
                     mazeString += maze[i][j].toString();
                 }
@@ -116,6 +119,16 @@ public class Maze2 {
 
     public Cell2 getFinish() {
         return getCellAtLocation(new Location(getRows() - 1, getCols() - 1));
+    }
+
+    // set Maze2 maze to Maze2 object
+    public void setMaze(Maze2 maze2) {
+        maze = maze2.maze;
+    }
+
+    // get Maze2 maze
+    public Maze2 getMaze() {
+        return this;
     }
 
 }

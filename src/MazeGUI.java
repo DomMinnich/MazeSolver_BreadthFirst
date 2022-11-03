@@ -1,5 +1,5 @@
 
-import java.io.File;
+import java.io.File;//1
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Scanner;
@@ -29,6 +29,15 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class MazeGUI extends Application {
+
+    private Maze2 maze;
+
+    public File getF() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Resource File");
+        File file = fileChooser.showOpenDialog(null);
+        return file;
+    }
 
     public void start(Stage primaryStage) throws Exception {
 
@@ -87,29 +96,23 @@ public class MazeGUI extends Application {
         readMazesBt.setMinSize(120, 50);
         EventHandler<ActionEvent> read = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
+                scrollBarPane.getChildren().clear();
                 TextInputDialog numOfMazes = new TextInputDialog("5");
                 numOfMazes.setTitle("Number of Mazes");
                 numOfMazes.setHeaderText("Enter The Number of Mazes To Be Read In");
                 numOfMazes.setContentText("Number of Mazes:");
                 numOfMazes.showAndWait();
-                // right now broken because maze variable is null (scanner)
-                // Maze maze = new Maze(null);
-                // int mazesAmount = Integer.parseInt(numOfMazes.getResult());
-                // maze.setNumMazes(mazesAmount);
 
-                FileChooser fileChooser = new FileChooser();
-                fileChooser.setTitle("Save File");
-                // fileChooser.setInitialFileName(fName);
-                File file = fileChooser.showOpenDialog(null);
-                try (Scanner fileInput = new Scanner(file)) {
-                    Maze maze = new Maze(fileInput);
-                    System.out.println(maze.toStringAll());
-                    Label label2 = new Label(maze.toStringAll());
+                try (Scanner fileInput = new Scanner(getF())) {
+                    // maze = maze.getMaze();
+                    maze = new Maze2(fileInput);
+                    maze.setMaze(maze);
+
+                    Label label2 = new Label(maze.toString());
                     label2.setFont(font2);
                     label2.setTextFill(Color.BLUE);
                     scrollBarPane.getChildren().add(label2);
                 } catch (FileNotFoundException e1) {
-                    // TODO Auto-generated catch block
                     e1.printStackTrace();
                 }
             }
@@ -123,7 +126,18 @@ public class MazeGUI extends Application {
         findPathSingleBt.setMinSize(120, 50);
         EventHandler<ActionEvent> findPathSingle = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
-                // TODO: Find path of the current single maze
+                scrollBarPane.getChildren().clear();
+                maze = maze.getMaze();
+                BreadthFirstMazeRunner runner = new BreadthFirstMazeRunner(maze, maze.getStart(), maze.getFinish());
+                runner.runMaze();
+                System.out.println(runner.pathTaken.toString() + "setArr path");
+                System.out.println(maze.toString(runner.pathTaken));
+
+                Label label3 = new Label(maze.toString((runner.pathTaken)));
+                label3.setFont(font2);
+                label3.setTextFill(Color.BLUE);
+                scrollBarPane.getChildren().add(label3);
+
             }
         };
         findPathSingleBt.setOnAction(findPathSingle);
