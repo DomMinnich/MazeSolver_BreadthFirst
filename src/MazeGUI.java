@@ -31,7 +31,20 @@ import javafx.stage.Stage;
 public class MazeGUI extends Application {
 
     private Maze2 maze;
-    public static int mazeCount = 1;
+    private File file;
+    public static int mazeSelected = 1;
+    public int mazeCount = 1;
+
+    //set mazeSelected method
+    public static void setMazeSelected(int mazeSelected) {
+        MazeGUI.mazeSelected = mazeSelected;
+        
+    }
+
+    //get mazeSelected method
+    public static int getMazeSelected() {
+        return mazeSelected;
+    }
 
     public void setMazeCount(int mazeCount) {
         this.mazeCount = mazeCount;
@@ -41,10 +54,20 @@ public class MazeGUI extends Application {
         return mazeCount;
     }
 
-    public File getF() {
+    public File getFileFirstTime() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
         File file = fileChooser.showOpenDialog(null);
+        setFile(file);
+        return file;
+
+    }
+
+    public void setFile(File file) {
+        this.file = file;
+    }
+
+    public File getFile() {
         return file;
     }
 
@@ -81,23 +104,6 @@ public class MazeGUI extends Application {
         sl.setFill(Color.WHITE);
         scrollBarPane.getChildren().add(sl);
 
-        //////////////////// ComboBox ////////////////////
-        Text mazeSelectionCBoxTitle = new Text("Maze Selection");
-        Font font3 = Font.font("yugothic", FontWeight.BOLD, FontPosture.ITALIC, 17);
-        mazeSelectionCBoxTitle.setFont(font3);
-        mazeSelectionCBoxTitle.setFill(Color.BLUE);
-        Text mazeSelectionText = new Text();
-        mazeSelectionText.setFont(font);
-        ComboBox<String> mazeSelectionCBox = new ComboBox<String>();
-        mazeSelectionCBox.setMaxSize(120, 50);
-        mazeSelectionCBox.setMinSize(120, 50);
-        mazeSelectionCBox.getItems().addAll("1\'st Maze", "2\'nd Maze", "3\'rd Maze", "4\'th Maze", "5\'th Maze",
-                "6\'th Maze", "7\'th Maze", "8\'th Maze", "9\'th Maze", "10\'th Maze");
-        mazeSelectionCBox.getSelectionModel().selectFirst();
-        mazeSelectionCBox.setOnAction(e -> {
-            // TODO: Retrieve the selected maze and display it after read in
-        });
-
         //////////////////// Read Button ////////////////////
         Button readMazesBt = new Button("Read Memos");
         readMazesBt.setFont(font);
@@ -112,10 +118,10 @@ public class MazeGUI extends Application {
                 numOfMazes.setHeaderText("Enter The Number of Mazes To Be Read In");
                 numOfMazes.setContentText("Number of Mazes:");
                 numOfMazes.showAndWait();
-                //set mazeCount to the number of mazes to be read in
+                // set mazeCount to the number of mazes to be read in
                 setMazeCount(Integer.parseInt(numOfMazes.getEditor().getText()));
 
-                try (Scanner fileInput = new Scanner(getF())) {
+                try (Scanner fileInput = new Scanner(getFileFirstTime())) {
                     // maze = maze.getMaze();
                     maze = new Maze2(fileInput);
                     maze.setMaze(maze);
@@ -201,6 +207,42 @@ public class MazeGUI extends Application {
                 e.consume();
             } else {
                 primaryStage.close();
+            }
+        });
+
+        //////////////////// ComboBox ////////////////////
+        Text mazeSelectionCBoxTitle = new Text("Maze Selection");
+        Font font3 = Font.font("yugothic", FontWeight.BOLD, FontPosture.ITALIC, 17);
+        mazeSelectionCBoxTitle.setFont(font3);
+        mazeSelectionCBoxTitle.setFill(Color.BLUE);
+        Text mazeSelectionText = new Text();
+        mazeSelectionText.setFont(font);
+        ComboBox<String> mazeSelectionCBox = new ComboBox<String>();
+        mazeSelectionCBox.setMaxSize(120, 50);
+        mazeSelectionCBox.setMinSize(120, 50);
+        mazeSelectionCBox.getItems().addAll("1\'st Maze", "2\'nd Maze", "3\'rd Maze", "4\'th Maze", "5\'th Maze",
+                "6\'th Maze", "7\'th Maze", "8\'th Maze", "9\'th Maze", "10\'th Maze");
+        mazeSelectionCBox.getSelectionModel().selectFirst();
+        mazeSelectionCBox.setOnAction(e -> {
+            int mazeSelected = mazeSelectionCBox.getSelectionModel().getSelectedIndex() + 1;
+            setMazeSelected(mazeSelected);
+            if (mazeSelected > mazeCount) {
+                // pop up error message
+                System.out.println("error maze not imported on slot selected");
+            } else {
+                System.out.println("maze selected is: " + mazeSelected);
+                scrollBarPane.getChildren().clear();
+                scrollBarPane.getChildren().add(sl);
+                try (Scanner fileInput = new Scanner(getFile())) {
+                    maze = new Maze2(fileInput);
+                    maze.setMaze(maze);
+                    Label label4 = new Label(maze.toString());
+                    label4.setFont(font2);
+                    label4.setTextFill(Color.BLUE);
+                    scrollBarPane.getChildren().add(label4);
+                } catch (FileNotFoundException e1) {
+                    e1.printStackTrace();
+                }
             }
         });
 

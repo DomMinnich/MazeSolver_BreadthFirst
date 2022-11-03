@@ -7,8 +7,7 @@ public class Maze2 {
     SetArr<Maze2> mazesArr = new SetArr<Maze2>();
     int rows;
     int cols;
-
-    int mazeCount = MazeGUI.mazeCount;
+    int mazeSelected = MazeGUI.mazeSelected;
 
     public Maze2(Cell2[][] maze2) {
         maze = maze2;
@@ -16,27 +15,26 @@ public class Maze2 {
 
     public Maze2(Scanner input) {
         // get mazeCount from MazeGUI class
-        System.out.println("Maze Count: " + mazeCount);
 
-        if (mazeCount == 1) {
+        if (mazeSelected == 1) {
             rows = input.nextInt();
             cols = input.nextInt();
             input.nextLine();
             input.nextLine();
         } else {
-            // mazeCount = mazeCount*2-3;
-            // for (int i = 0; i < mazeCount; i++) {
 
-            // input.nextInt();
-            // i++;
-            // }
-
-             input.nextInt();
-             input.nextInt();
+            for (int i = 0; i < mazeSelected-1; i++) {
+                input.nextLine();
+                input.nextLine();
+                while (!input.hasNextInt()) {
+                    input.nextLine();
+                }
+            }
             rows = input.nextInt();
             cols = input.nextInt();
             input.nextLine();
             input.nextLine();
+
         }
 
         Cell2[][] maze2 = new Cell2[rows][cols];
@@ -52,8 +50,11 @@ public class Maze2 {
                 // System.out.println("eastWall: " + eastWall + "southWall: " + southWall +
                 // "loc: " + loc);
                 temp.setCell(loc, eastWall, southWall);
+
             }
+
         }
+
         maze = temp.maze;
         mazesArr.enter(temp);
 
