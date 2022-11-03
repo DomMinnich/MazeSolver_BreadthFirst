@@ -93,7 +93,7 @@ public class MazeGUI extends Application {
         scrollBar.setMinSize(1100, 600);
 
         // start
-        Label st = new Label("Click \"Read Mazes\" To Find Your Maze File\n\n\t\tEnjoy!");
+        Label st = new Label("Click \"Read Mazes\" To Find Your Maze File");
         st.setFont(font2);
         st.setTextFill(Color.GREEN);
         st.setTranslateX(200);
@@ -168,33 +168,12 @@ public class MazeGUI extends Application {
                 label3.setFont(font2);
                 label3.setTextFill(Color.BLUE);
                 scrollBarPane.getChildren().add(label3);
-                Image image = new Image(new FileInputStream());
-                scrollBarPane.getChildren().add(new ImageView(image));
 
             }
         };
         findPathSingleBt.setOnAction(findPathSingle);
 
-        //////////////////// Write Mazes ////////////////////
-        Button writeMazesBt = new Button("Write Mazes");
-        writeMazesBt.setFont(font);
-        writeMazesBt.setMaxSize(120, 50);
-        writeMazesBt.setMinSize(120, 50);
-        EventHandler<ActionEvent> write = new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent e) {
-                FileChooser fileChooser = new FileChooser();
-                fileChooser.setTitle("Save File");
-                // fileChooser.setInitialFileName(fName);
-                File file = fileChooser.showSaveDialog(null);
-                try (PrintWriter fOut = new PrintWriter(file)) {
-                    // Also print the row and column numbers of the maze
-                    // fOut.print(maze.toStringAll());
-                } catch (FileNotFoundException e1) {
-                    e1.printStackTrace();
-                }
-            }
-        };
-        writeMazesBt.setOnAction(write);
+       
 
         /////////////////////////// Quit Button ///////////////////////////
         Button quitBt = new Button("Quit");
@@ -275,6 +254,56 @@ public class MazeGUI extends Application {
             }
         };
         findPathAllBt.setOnAction(findPathAll);
+
+
+         //////////////////// Write Mazes ////////////////////
+         Button writeMazesBt = new Button("Write Mazes");
+         writeMazesBt.setFont(font);
+         writeMazesBt.setMaxSize(120, 50);
+         writeMazesBt.setMinSize(120, 50);
+         EventHandler<ActionEvent> write = new EventHandler<ActionEvent>() {
+             public void handle(ActionEvent e) {
+                 FileChooser fileChooser = new FileChooser();
+                 fileChooser.setTitle("Save File");
+                 // fileChooser.setInitialFileName(fName);
+                 File file = fileChooser.showSaveDialog(null);
+                 try (PrintWriter fOut = new PrintWriter(file)) {
+ 
+ 
+                     int mazeSelected = mazeSelectionCBox.getSelectionModel().getSelectedIndex() + 1;
+                     setMazeSelected(mazeSelected);
+                     if (mazeSelected > mazeCount) {
+                         // pop up error message
+                         System.out.println("error maze not imported on slot selected");
+                     } else {
+                         System.out.println("maze selected is: " + mazeSelected);
+                         scrollBarPane.getChildren().clear();
+                         scrollBarPane.getChildren().add(sl);
+                         for (int i =0; i < mazeCount; i++){
+                            mazeSelected = i + 1;
+                         
+                         try (Scanner fileInput = new Scanner(getFile())) {
+                             maze = new Maze2(fileInput);
+                             maze.setMaze(maze);
+                             BreadthFirstMazeRunner runner = new BreadthFirstMazeRunner(maze, maze.getStart(), maze.getFinish());
+                             runner.runMaze();
+                            fOut.println(maze.getRows());
+                            fOut.println(maze.getCols());
+                            fOut.println(maze.toString(runner.pathTaken));
+
+                            } catch (FileNotFoundException e1) {
+                                e1.printStackTrace();
+                            }
+                            }
+                        }
+                    }
+                 catch (FileNotFoundException e2) {
+                    e2.printStackTrace();
+                }
+            }
+        };
+
+         writeMazesBt.setOnAction(write);
 
         // Stage Configuration
         vbTop.getChildren().addAll(mazeSelectionCBoxTitle, mazeSelectionCBox);
