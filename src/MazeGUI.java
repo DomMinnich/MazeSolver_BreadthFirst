@@ -93,7 +93,7 @@ public class MazeGUI extends Application {
         ScrollPane scrollBar = new ScrollPane(scrollBarPane);
         scrollBar.setMaxSize(1100, 600);
         scrollBar.setMinSize(1100, 600);
-        Image image = new Image("giphy3.gif", 400, 100, false, false);
+        Image image = new Image("giphy3.gif", 200, 100, false, false);
         BackgroundImage bg = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
         Background wallpaper = new Background(bg);
@@ -104,7 +104,19 @@ public class MazeGUI extends Application {
                 BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
         Background wallpaper2 = new Background(bg2);
 
-        StackPane p = new StackPane();
+        Image image3 = new Image("StartWP.gif", 1100, 600, false, false);
+        BackgroundImage bg3 = new BackgroundImage(image3, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+        Background wallpaper3 = new Background(bg3);
+
+        Image image4 = new Image("greyWP.png", 2000, 2000, false, false);
+        BackgroundImage bg4 = new BackgroundImage(image4, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+        Background wallpaper4 = new Background(bg4);
+
+
+
+        Pane p = new Pane();
         p.setMinSize(400, 100);
         p.setMaxSize(400, 100);
         p.setBackground(wallpaper);
@@ -115,15 +127,25 @@ public class MazeGUI extends Application {
         p2.setBackground(wallpaper2);
         p2.setMaxSize(2000, 2000);
         p2.setMinSize(2000, 2000);
-        scrollBarPane.getChildren().add(p2);
-        scrollBarPane.getChildren().add(p);
+        Pane p3 = new Pane();
+        p3.setMaxSize(1100, 600);
+        p3.setMinSize(1100, 600);
+        p3.setBackground(wallpaper3);
+        // p3.setOpacity(.4);
+        Pane p4 = new Pane();
+        p4.setMaxSize(2000, 2000);
+        p4.setMinSize(2000, 2000);
+        p4.setBackground(wallpaper4);
 
+        scrollBarPane.getChildren().add(p4);
+        scrollBarPane.getChildren().add(p3);
+       // scrollBarPane.getChildren().add(p);
         // start
         Label st = new Label("Click \"Read Mazes\" To Find Your Maze File");
         st.setFont(font2);
-        st.setTextFill(Color.GREEN);
+        st.setTextFill(Color.YELLOW);
         st.setTranslateX(200);
-        st.setTranslateY(200);
+        st.setTranslateY(50);
         scrollBarPane.getChildren().add(st);
 
         // For the scroll bars to appear, I know it's not the best way to do it but it
@@ -139,7 +161,7 @@ public class MazeGUI extends Application {
                         "\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|" +
                         "\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|");
         sl.setFont(font);
-        sl.setFill(Color.WHITE);
+        sl.setFill(Color.BLACK);
         scrollBarPane.getChildren().addAll(sl);
 
         //////////////////// Read Button ////////////////////
@@ -303,12 +325,15 @@ public class MazeGUI extends Application {
                 mazeSelectionCBox.getSelectionModel().clearSelection();
                 Label label5 = new Label("Pick A Solved Maze To View");
                 label5.setFont(font2);
-                label5.setTextFill(Color.CYAN);
-                label5.setTranslateX(200);
-                label5.setTranslateY(150);
+                label5.setTextFill(Color.YELLOW);
+                label5.setTranslateX(270);
+                label5.setTranslateY(50);
+
                 scrollBarPane.getChildren().clear();
                 scrollBarPane.getChildren().addAll(sl, p2);
-                scrollBarPane.getChildren().add(p);
+                scrollBarPane.getChildren().addAll(p4,p3);
+
+                
                 scrollBarPane.getChildren().add(label5);
             }
         };
