@@ -8,7 +8,7 @@ public class SetArr<E> {// 1
     }
 
     public void enter(E item) {
-        System.out.println("entering");
+       // System.out.println("entering");
         if (size == set.length) {
             ensureCapacity();
         }

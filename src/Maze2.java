@@ -54,7 +54,7 @@ public class Maze2 {
             }
 
         }
-
+    //TODO delete this
         maze = temp.maze;
         mazesArr.enter(temp);
 
@@ -79,7 +79,7 @@ public class Maze2 {
 
     public String toString(SetArr<Cell2> pathTaken) {
         String mazeString = "   ";
-        System.out.println(pathTaken.size() + " pathTaken.size()");
+     //   System.out.println(pathTaken.size() + " pathTaken.size()");
         for (int i = 0; i < maze[0].length - 1; i++) {
             mazeString += "_ ";
         }
@@ -104,14 +104,14 @@ public class Maze2 {
 
     public void setCell(Location location, Cell2 north, Cell2 west, boolean eastWall, boolean southWall) {
         maze[location.getRow()][location.getCol()] = new Cell2(location, north, west, eastWall, southWall);
-        System.out.println("within setCell");
+      //  System.out.println("within setCell");
         if (location.getRow() < maze.length) {
             maze[location.getRow() + 1][location.getCol()].setNorthNeighbor(maze[location.getRow()][location.getCol()]);
-            System.out.println("Attempted first");
+       //     System.out.println("Attempted first");
         }
         if (location.getCol() < maze[0].length) {
             maze[location.getRow()][location.getCol() + 1].setWestNeighbor(maze[location.getRow()][location.getCol()]);
-            System.out.println("Attempted");
+      //      System.out.println("Attempted");
         }
 
     }

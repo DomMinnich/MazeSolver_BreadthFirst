@@ -11,12 +11,12 @@ public class BreadthFirstMazeRunner extends MazeRunner {
         int count = 0;
         Cell2 start = maze.getStart();
         Cell2 finish = maze.getFinish();
-        System.out.println("start" + start);
-        System.out.println("finish" + finish);
-        System.out.println("add the start cell to the queue");
+     //   System.out.println("start" + start);
+     //   System.out.println("finish" + finish);
+      //  System.out.println("add the start cell to the queue");
         enqueuedCells.enqueue(start, new Location(0, 0));
         // while the queue is not empty
-        System.out.println("while the queue is not empty");
+    //    System.out.println("while the queue is not empty");
         while (!enqueuedCells.isEmpty()) {
             count++;
             // dequeue the cell
@@ -27,8 +27,8 @@ public class BreadthFirstMazeRunner extends MazeRunner {
             visitedCells.enter(current);
             if (current == finish) {
                 pathTaken = visitedCells;
-                System.out.println(visitedCells + "this is the visited cells");
-                System.out.println("count" + count);
+         //       System.out.println(visitedCells + "this is the visited cells");
+          //      System.out.println("count" + count);
                 SetArr<Cell2> pathSolved = new SetArr<>();
                 while (current != start) {
                     pathSolved.enter(current);
@@ -61,8 +61,8 @@ public class BreadthFirstMazeRunner extends MazeRunner {
         // }
         // }
         // return false
-        System.out.println("could not solve");
-        System.out.println("count" + count);
+       // System.out.println("could not solve");
+       // System.out.println("count" + count);
         return false;
 
     }
@@ -78,16 +78,16 @@ public class BreadthFirstMazeRunner extends MazeRunner {
     public static void main(String[] args) throws FileNotFoundException {
         // get file from user
         Scanner input = new Scanner(System.in);
-        System.out.println("Enter the name of the file containing the maze: ");
+     //   System.out.println("Enter the name of the file containing the maze: ");
         String fileName = input.nextLine();
         File file = new File(fileName);
         Scanner fileInput = new Scanner(file);
         int num = fileInput.nextInt();
-        System.out.println("Number = " + num);
+      //  System.out.println("Number = " + num);
         int num2 = fileInput.nextInt();
-        System.out.println("Number = " + num2);
+     //   System.out.println("Number = " + num2);
         int num3 = fileInput.nextInt();
-        System.out.println("Number = " + num3);
+     //   System.out.println("Number = " + num3);
 
         // Maze2 maze = new Maze2(fileInput);
         // System.out.println("printing maze");

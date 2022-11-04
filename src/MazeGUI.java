@@ -141,6 +141,8 @@ public class MazeGUI extends Application {
                     Label label2 = new Label(maze.toString());
                     label2.setFont(font2);
                     label2.setTextFill(Color.BLUE);
+                    label2.setTranslateX(200);
+                    label2.setTranslateY(150);
                     scrollBarPane.getChildren().add(label2);
                 } catch (FileNotFoundException e1) {
                     e1.printStackTrace();
@@ -160,20 +162,32 @@ public class MazeGUI extends Application {
                 scrollBarPane.getChildren().add(sl);
                 maze = maze.getMaze();
                 BreadthFirstMazeRunner runner = new BreadthFirstMazeRunner(maze, maze.getStart(), maze.getFinish());
-                runner.runMaze();
-                System.out.println(runner.pathTaken.toString() + "setArr path");
-                System.out.println(maze.toString(runner.pathTaken));
+                boolean b = runner.runMaze();
+                if (b == true) {
+                    Label label3 = new Label(maze.toString((runner.pathTaken)));
+                    label3.setFont(font2);
+                    label3.setTextFill(Color.BLUE);
+                    label3.setTranslateX(200);
+                    label3.setTranslateY(150);
+                    scrollBarPane.getChildren().add(label3);
 
-                Label label3 = new Label(maze.toString((runner.pathTaken)));
-                label3.setFont(font2);
-                label3.setTextFill(Color.BLUE);
-                scrollBarPane.getChildren().add(label3);
+                } else {
+                    Label label3 = new Label(maze.toString());
+                    label3.setFont(font2);
+                    label3.setTextFill(Color.RED);
+                    label3.setTranslateX(200);
+                    label3.setTranslateY(150);
+                    scrollBarPane.getChildren().add(label3);
 
+                    Label label5 = new Label("Maze Has No Solution Read single");
+                    label5.setFont(font2);
+                    label5.setTextFill(Color.RED);
+                    label5.setTranslateX(200);
+                    scrollBarPane.getChildren().add(label5);
+                }
             }
         };
         findPathSingleBt.setOnAction(findPathSingle);
-
-       
 
         /////////////////////////// Quit Button ///////////////////////////
         Button quitBt = new Button("Quit");
@@ -218,17 +232,30 @@ public class MazeGUI extends Application {
                     maze = new Maze2(fileInput);
                     maze.setMaze(maze);
                     BreadthFirstMazeRunner runner = new BreadthFirstMazeRunner(maze, maze.getStart(), maze.getFinish());
-                    runner.runMaze();
-                    if (solveAll == true) {
+                    boolean b = runner.runMaze();
+                    if (solveAll == true && b == true) {
                         Label label4 = new Label(maze.toString(runner.pathTaken));
                         label4.setFont(font2);
+                        label4.setTranslateX(200);
+                        label4.setTranslateY(150);
                         label4.setTextFill(Color.BLUE);
                         scrollBarPane.getChildren().add(label4);
+                    } else {
+                        Label label4 = new Label(maze.toString());
+                        label4.setFont(font2);
+                        label4.setTextFill(Color.BLUE);
+                        label4.setTranslateX(200);
+                        label4.setTranslateY(150);
+                        scrollBarPane.getChildren().add(label4);
+                        if (b == false) {
+                            Label label5 = new Label("Maze Has No Solution");
+                            label5.setFont(font2);
+                            label5.setTextFill(Color.RED);
+                            label5.setTranslateX(200);
+                            label4.setTextFill(Color.RED);
+                            scrollBarPane.getChildren().add(label5);
+                        }
                     }
-                    Label label4 = new Label(maze.toString());
-                    label4.setFont(font2);
-                    label4.setTextFill(Color.BLUE);
-                    scrollBarPane.getChildren().add(label4);
                 } catch (FileNotFoundException e1) {
                     e1.printStackTrace();
                 }
@@ -248,6 +275,8 @@ public class MazeGUI extends Application {
                 Label label5 = new Label("Pick A Solved Maze To View");
                 label5.setFont(font2);
                 label5.setTextFill(Color.BLUE);
+                label5.setTranslateX(200);
+                label5.setTranslateY(150);
                 scrollBarPane.getChildren().clear();
                 scrollBarPane.getChildren().add(sl);
                 scrollBarPane.getChildren().add(label5);
@@ -255,55 +284,57 @@ public class MazeGUI extends Application {
         };
         findPathAllBt.setOnAction(findPathAll);
 
+        //////////////////// Write Mazes ////////////////////
+        Button writeMazesBt = new Button("Write Paths");
+        writeMazesBt.setFont(font);
+        writeMazesBt.setMaxSize(120, 50);
+        writeMazesBt.setMinSize(120, 50);
+        EventHandler<ActionEvent> write = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Save File");
+                // fileChooser.setInitialFileName(fName);
+                File file = fileChooser.showSaveDialog(null);
+                try (PrintWriter fOut = new PrintWriter(file)) {
 
-         //////////////////// Write Mazes ////////////////////
-         Button writeMazesBt = new Button("Write Mazes");
-         writeMazesBt.setFont(font);
-         writeMazesBt.setMaxSize(120, 50);
-         writeMazesBt.setMinSize(120, 50);
-         EventHandler<ActionEvent> write = new EventHandler<ActionEvent>() {
-             public void handle(ActionEvent e) {
-                 FileChooser fileChooser = new FileChooser();
-                 fileChooser.setTitle("Save File");
-                 // fileChooser.setInitialFileName(fName);
-                 File file = fileChooser.showSaveDialog(null);
-                 try (PrintWriter fOut = new PrintWriter(file)) {
- 
- 
-                     int mazeSelected = mazeSelectionCBox.getSelectionModel().getSelectedIndex() + 1;
-                     setMazeSelected(mazeSelected);
-                     if (mazeSelected > mazeCount) {
-                         // pop up error message
-                         System.out.println("error maze not imported on slot selected");
-                     } else {
-                         System.out.println("maze selected is: " + mazeSelected);
-                         scrollBarPane.getChildren().clear();
-                         scrollBarPane.getChildren().add(sl);
-                         for (int i =0; i < mazeCount; i++){
-                            mazeSelected = i + 1;
-                         
-                         try (Scanner fileInput = new Scanner(getFile())) {
-                             maze = new Maze2(fileInput);
-                             maze.setMaze(maze);
-                             BreadthFirstMazeRunner runner = new BreadthFirstMazeRunner(maze, maze.getStart(), maze.getFinish());
-                             runner.runMaze();
-                            fOut.println(maze.getRows());
-                            fOut.println(maze.getCols());
-                            fOut.println(maze.toString(runner.pathTaken));
-
+                    int mazeSelected = mazeSelectionCBox.getSelectionModel().getSelectedIndex() + 1;
+                    setMazeSelected(mazeSelected);
+                    if (mazeSelected > mazeCount) {
+                        // pop up error message
+                        System.out.println("error maze not imported on slot selected");
+                    } else {
+                        System.out.println("maze selected is: " + mazeSelected);
+                        scrollBarPane.getChildren().clear();
+                        scrollBarPane.getChildren().add(sl);
+                        for (int i = 0; i < mazeCount; i++) {
+                            int m = getMazeSelected();
+                           m = i + 1;
+                            setMazeSelected(m);
+                            try (Scanner fileInput = new Scanner(getFile())) {
+                                maze = new Maze2(fileInput);
+                                maze.setMaze(maze);
+                                BreadthFirstMazeRunner runner = new BreadthFirstMazeRunner(maze, maze.getStart(),
+                                        maze.getFinish());
+                                boolean b = runner.runMaze();
+                                fOut.println(maze.getRows());
+                                fOut.println(maze.getCols());
+                                if (b == true) {
+                                    fOut.println(maze.toString(runner.pathTaken));
+                                } else {
+                                    fOut.println(maze.toString());
+                                }
                             } catch (FileNotFoundException e1) {
                                 e1.printStackTrace();
                             }
-                            }
                         }
                     }
-                 catch (FileNotFoundException e2) {
+                } catch (FileNotFoundException e2) {
                     e2.printStackTrace();
                 }
             }
         };
 
-         writeMazesBt.setOnAction(write);
+        writeMazesBt.setOnAction(write);
 
         // Stage Configuration
         vbTop.getChildren().addAll(mazeSelectionCBoxTitle, mazeSelectionCBox);
