@@ -1,5 +1,5 @@
 
-import javafx.application.Application;//1
+import javafx.application.Application;
 
 public class ProjectMain {
     public static void main(String[] args) throws Exception {
