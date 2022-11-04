@@ -218,7 +218,7 @@ public class MazeGUI extends Application {
                 // pop up error message
                 System.out.println("error maze not imported on slot selected");
             } else {
-                System.out.println("maze selected is: " + mazeSelected);
+               // System.out.println("maze selected is: " + mazeSelected);
                 scrollBarPane.getChildren().clear();
                 scrollBarPane.getChildren().add(sl);
                 try (Scanner fileInput = new Scanner(getFile())) {
@@ -295,7 +295,7 @@ public class MazeGUI extends Application {
                         // pop up error message
                         System.out.println("error maze not imported on slot selected");
                     } else {
-                        System.out.println("maze selected is: " + mazeSelected);
+                       // System.out.println("maze selected is: " + mazeSelected);
                         scrollBarPane.getChildren().clear();
                         scrollBarPane.getChildren().add(sl);
                         for (int i = 0; i < mazeCount; i++) {
