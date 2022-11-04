@@ -24,7 +24,6 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -97,9 +96,8 @@ public class MazeGUI extends Application {
         BackgroundImage bg = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
         Background wallpaper = new Background(bg);
-        // make new background with color black
 
-        Image image2 = new Image("black.png", 2000, 2000, false, false);
+        Image image2 = new Image("black.png", 2300, 100, false, false);
         BackgroundImage bg2 = new BackgroundImage(image2, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
         Background wallpaper2 = new Background(bg2);
@@ -114,32 +112,34 @@ public class MazeGUI extends Application {
                 BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
         Background wallpaper4 = new Background(bg4);
 
-
-
         Pane p = new Pane();
         p.setMinSize(400, 100);
         p.setMaxSize(400, 100);
         p.setBackground(wallpaper);
-        p.translateYProperty().set(-250);
+        p.translateXProperty().set(-100);
         Pane p2 = new Pane();
-        p.setMaxSize(1100, 600);
-        p.setMinSize(1100, 600);
+        p2.setMinSize(1700, 100);
+        p2.setMaxSize(1700, 100);
         p2.setBackground(wallpaper2);
-        p2.setMaxSize(2000, 2000);
-        p2.setMinSize(2000, 2000);
         Pane p3 = new Pane();
         p3.setMaxSize(1100, 600);
         p3.setMinSize(1100, 600);
         p3.setBackground(wallpaper3);
-        // p3.setOpacity(.4);
         Pane p4 = new Pane();
         p4.setMaxSize(2000, 2000);
         p4.setMinSize(2000, 2000);
         p4.setBackground(wallpaper4);
 
+        Label sTLabel = new Label("| Maze 1 Selected");
+        sTLabel.setFont(font2);
+        sTLabel.setTextFill(Color.YELLOW);
+        sTLabel.translateXProperty().set(190);
+        sTLabel.translateYProperty().set(30);
+        p2.getChildren().add(sTLabel);
+
+
         scrollBarPane.getChildren().add(p4);
         scrollBarPane.getChildren().add(p3);
-       // scrollBarPane.getChildren().add(p);
         // start
         Label st = new Label("Click \"Read Mazes\" To Find Your Maze File");
         st.setFont(font2);
@@ -173,8 +173,7 @@ public class MazeGUI extends Application {
         EventHandler<ActionEvent> read = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 scrollBarPane.getChildren().clear();
-                scrollBarPane.getChildren().addAll(sl, p2);
-                scrollBarPane.getChildren().add(p);
+                scrollBarPane.getChildren().addAll(sl, p4);
                 TextInputDialog numOfMazes = new TextInputDialog("5");
                 numOfMazes.setTitle("Number of Mazes");
                 numOfMazes.setHeaderText("Enter The Number of Mazes To Be Read In");
@@ -194,6 +193,7 @@ public class MazeGUI extends Application {
                 } catch (FileNotFoundException e1) {
                     e1.printStackTrace();
                 }
+                scrollBarPane.getChildren().addAll(p2, p);
             }
         };
         readMazesBt.setOnAction(read);
@@ -206,18 +206,33 @@ public class MazeGUI extends Application {
         EventHandler<ActionEvent> findPathSingle = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 scrollBarPane.getChildren().clear();
-                scrollBarPane.getChildren().addAll(sl, p2);
-                scrollBarPane.getChildren().add(p);
+                scrollBarPane.getChildren().addAll(sl, p4);
+                scrollBarPane.getChildren().addAll(p2, p);
+                Label sLabel = new Label("And Is Solvable!");
+                sLabel.setFont(font2);
+                sLabel.setTranslateX(515);
+                sLabel.setTranslateY(30);
+                sLabel.setTextFill(Color.GREEN);
+                scrollBarPane.getChildren().add(sLabel);
+
+
                 maze = maze.getMaze();
                 BreadthFirstMazeRunner runner = new BreadthFirstMazeRunner(maze, maze.getStart(), maze.getFinish());
                 boolean b = runner.runMaze();
                 if (b == true) {
                     Label label3 = new Label(maze.toString((runner.pathTaken)));
                     label3.setFont(font2);
-                    label3.setTextFill(Color.CYAN);
+                    label3.setTextFill(Color.YELLOW);
                     label3.setTranslateX(200);
                     label3.setTranslateY(150);
-                    scrollBarPane.getChildren().add(label3);
+                    Label label33 = new Label(maze.toString());
+                    label33.setFont(font2);
+                    label33.setTextFill(Color.CYAN);
+                    label33.setTranslateX(200);
+                    label33.setTranslateY(150);
+
+                    scrollBarPane.getChildren().addAll(label3, label33);
+
                 } else {
                     Label label3 = new Label(maze.toString());
                     label3.setFont(font2);
@@ -275,10 +290,10 @@ public class MazeGUI extends Application {
                         ButtonType.OK);
                 a.showAndWait();
             } else {
-                // System.out.println("maze selected is: " + mazeSelected);
                 scrollBarPane.getChildren().clear();
-                scrollBarPane.getChildren().addAll(sl, p2);
-                scrollBarPane.getChildren().add(p);
+                scrollBarPane.getChildren().addAll(sl, p4);
+                sTLabel.setText("| Maze " + mazeSelected + " Selected");
+                scrollBarPane.getChildren().addAll(p2, p);
                 try (Scanner fileInput = new Scanner(getFile())) {
                     maze = new Maze(fileInput);
                     maze.setMaze(maze);
@@ -289,8 +304,19 @@ public class MazeGUI extends Application {
                         label4.setFont(font2);
                         label4.setTranslateX(200);
                         label4.setTranslateY(150);
-                        label4.setTextFill(Color.CYAN);
-                        scrollBarPane.getChildren().add(label4);
+                        label4.setTextFill(Color.YELLOW);
+                        Label label44 = new Label(maze.toString());
+                        label44.setFont(font2);
+                        label44.setTranslateX(200);
+                        label44.setTranslateY(150);
+                        label44.setTextFill(Color.CYAN);
+
+                        Label sLabel = new Label("And Is Solvable!");
+                        sLabel.setFont(font2);
+                        sLabel.setTranslateX(515);
+                        sLabel.setTranslateY(30);
+                        sLabel.setTextFill(Color.GREEN);
+                        scrollBarPane.getChildren().addAll(label4, label44, sLabel);
                     } else {
                         Label label4 = new Label(maze.toString());
                         label4.setFont(font2);
@@ -299,10 +325,11 @@ public class MazeGUI extends Application {
                         label4.setTranslateY(150);
                         scrollBarPane.getChildren().add(label4);
                         if (b == false) {
-                            Label label5 = new Label("Maze Has No Solution");
+                            Label label5 = new Label("And Has No Solution!");
                             label5.setFont(font2);
                             label5.setTextFill(Color.RED);
-                            label5.setTranslateX(200);
+                            label5.setTranslateX(515);
+                            label5.setTranslateY(30);
                             label4.setTextFill(Color.RED);
                             scrollBarPane.getChildren().add(label5);
                         }
@@ -330,10 +357,8 @@ public class MazeGUI extends Application {
                 label5.setTranslateY(50);
 
                 scrollBarPane.getChildren().clear();
-                scrollBarPane.getChildren().addAll(sl, p2);
-                scrollBarPane.getChildren().addAll(p4,p3);
+                scrollBarPane.getChildren().addAll(sl, p4, p3);
 
-                
                 scrollBarPane.getChildren().add(label5);
             }
         };
@@ -363,7 +388,7 @@ public class MazeGUI extends Application {
                     } else {
                         // System.out.println("maze selected is: " + mazeSelected);
                         scrollBarPane.getChildren().clear();
-                        scrollBarPane.getChildren().addAll(sl, p2);
+                        scrollBarPane.getChildren().addAll(sl, p4);
                         scrollBarPane.getChildren().add(p);
                         for (int i = 0; i < mazeCount; i++) {
                             int m = getMazeSelected();
