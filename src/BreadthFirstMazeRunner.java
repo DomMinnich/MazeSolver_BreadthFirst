@@ -1,7 +1,3 @@
-import java.io.File;//1
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-
 public class BreadthFirstMazeRunner extends MazeRunner {
     QueueArr<Cell> enqueuedCells = new QueueArr<Cell>();
     SetArr<Cell> visitedCells = new SetArr<Cell>();

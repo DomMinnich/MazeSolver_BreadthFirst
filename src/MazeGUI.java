@@ -1,5 +1,5 @@
 
-import java.io.File;//1
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Scanner;
@@ -36,13 +36,10 @@ public class MazeGUI extends Application {
     public int mazeCount = 1;
     boolean solveAll = false;
 
-    // set mazeSelected method
     public static void setMazeSelected(int mazeSelected) {
         MazeGUI.mazeSelected = mazeSelected;
-
     }
 
-    // get mazeSelected method
     public static int getMazeSelected() {
         return mazeSelected;
     }
@@ -61,7 +58,6 @@ public class MazeGUI extends Application {
         File file = fileChooser.showOpenDialog(null);
         setFile(file);
         return file;
-
     }
 
     public void setFile(File file) {
@@ -100,7 +96,8 @@ public class MazeGUI extends Application {
         st.setTranslateY(200);
         scrollBarPane.getChildren().add(st);
 
-        // For the scroll bars to appear
+        // For the scroll bars to appear, I know it's not the best way to do it but it
+        // works
         Text sl = new Text(
                 "------------------------------------------------------------------------------" +
                         "------------------------------------------------------------------------------" +
@@ -132,12 +129,9 @@ public class MazeGUI extends Application {
                 numOfMazes.showAndWait();
                 // set mazeCount to the number of mazes to be read in
                 setMazeCount(Integer.parseInt(numOfMazes.getEditor().getText()));
-
                 try (Scanner fileInput = new Scanner(getFileFirstTime())) {
-                    // maze = maze.getMaze();
                     maze = new Maze(fileInput);
                     maze.setMaze(maze);
-
                     Label label2 = new Label(maze.toString());
                     label2.setFont(font2);
                     label2.setTextFill(Color.BLUE);
@@ -170,7 +164,6 @@ public class MazeGUI extends Application {
                     label3.setTranslateX(200);
                     label3.setTranslateY(150);
                     scrollBarPane.getChildren().add(label3);
-
                 } else {
                     Label label3 = new Label(maze.toString());
                     label3.setFont(font2);
@@ -296,7 +289,6 @@ public class MazeGUI extends Application {
                 // fileChooser.setInitialFileName(fName);
                 File file = fileChooser.showSaveDialog(null);
                 try (PrintWriter fOut = new PrintWriter(file)) {
-
                     int mazeSelected = mazeSelectionCBox.getSelectionModel().getSelectedIndex() + 1;
                     setMazeSelected(mazeSelected);
                     if (mazeSelected > mazeCount) {
@@ -308,7 +300,7 @@ public class MazeGUI extends Application {
                         scrollBarPane.getChildren().add(sl);
                         for (int i = 0; i < mazeCount; i++) {
                             int m = getMazeSelected();
-                           m = i + 1;
+                            m = i + 1;
                             setMazeSelected(m);
                             try (Scanner fileInput = new Scanner(getFile())) {
                                 maze = new Maze(fileInput);
@@ -333,7 +325,6 @@ public class MazeGUI extends Application {
                 }
             }
         };
-
         writeMazesBt.setOnAction(write);
 
         // Stage Configuration

@@ -1,4 +1,4 @@
-public class SetArr<E> {// 1
+public class SetArr<E> {
     private E[] set;
     private int size = 1;
 
@@ -8,7 +8,6 @@ public class SetArr<E> {// 1
     }
 
     public void enter(E item) {
-       // System.out.println("entering");
         if (size == set.length) {
             ensureCapacity();
         }
@@ -60,7 +59,6 @@ public class SetArr<E> {// 1
         return result;
     }
 
-    // contains method
     public boolean contains(E item) {
         for (int i = 0; i < size; i++) {
             if (set[i].equals(item)) {
@@ -70,7 +68,6 @@ public class SetArr<E> {// 1
         return false;
     }
 
-    // retreive method
     public E retreive(E item) {
         for (int i = 0; i < size; i++) {
             if (set[i].equals(item)) {
@@ -79,5 +76,4 @@ public class SetArr<E> {// 1
         }
         return null;
     }
-
 }

@@ -1,10 +1,9 @@
-import java.util.Scanner; //1
+import java.util.Scanner;
 
 public class Maze {
     private Cell[][] maze;
     Cell start;
     Cell finish;
-    SetArr<Maze> mazesArr = new SetArr<Maze>();
     int rows;
     int cols;
     int mazeSelected = MazeGUI.mazeSelected;
@@ -15,15 +14,13 @@ public class Maze {
 
     public Maze(Scanner input) {
         // get mazeCount from MazeGUI class
-
         if (mazeSelected == 1) {
             rows = input.nextInt();
             cols = input.nextInt();
             input.nextLine();
             input.nextLine();
         } else {
-
-            for (int i = 0; i < mazeSelected-1; i++) {
+            for (int i = 0; i < mazeSelected - 1; i++) {
                 input.nextLine();
                 input.nextLine();
                 while (!input.hasNextInt()) {
@@ -34,30 +31,19 @@ public class Maze {
             cols = input.nextInt();
             input.nextLine();
             input.nextLine();
-
         }
-
         Cell[][] maze2 = new Cell[rows][cols];
         Maze temp = new Maze(maze2);
         for (int i = 0; i < rows; i++) {
             String line1 = input.nextLine();
-            // System.out.println(line1 + " line1");
             for (int j = 0; j < cols; j++) {
                 Location loc = new Location(i, j);
                 Boolean eastWall = line1.charAt(j * 2 + 2) == '|';
                 Boolean southWall = line1.charAt(j * 2 + 1) == '_';
-                // System.out.println("tried to create cell");
-                // System.out.println("eastWall: " + eastWall + "southWall: " + southWall +
-                // "loc: " + loc);
                 temp.setCell(loc, eastWall, southWall);
-
             }
-
         }
-    //TODO delete this
         maze = temp.maze;
-        mazesArr.enter(temp);
-
     }
 
     public Cell getCellAtLocation(Location location) {
@@ -74,12 +60,10 @@ public class Maze {
 
     public String toString() {
         return toString(new SetArr<Cell>());
-
     }
 
     public String toString(SetArr<Cell> pathTaken) {
         String mazeString = "   ";
-     //   System.out.println(pathTaken.size() + " pathTaken.size()");
         for (int i = 0; i < maze[0].length - 1; i++) {
             mazeString += "_ ";
         }
@@ -88,11 +72,8 @@ public class Maze {
         for (int i = 0; i < maze.length; i++) {
             mazeString += "|";
             for (int j = 0; j < maze[i].length; j++) {
-                // System.out.println("i: " + i + " j: " + j);
-                // System.out.println(mazeString);
                 if (pathTaken.contains(maze[i][j])) {
                     mazeString += maze[i][j].toString("x");
-
                 } else {
                     mazeString += maze[i][j].toString();
                 }
@@ -104,16 +85,15 @@ public class Maze {
 
     public void setCell(Location location, Cell north, Cell west, boolean eastWall, boolean southWall) {
         maze[location.getRow()][location.getCol()] = new Cell(location, north, west, eastWall, southWall);
-      //  System.out.println("within setCell");
+        // System.out.println("within setCell");
         if (location.getRow() < maze.length) {
             maze[location.getRow() + 1][location.getCol()].setNorthNeighbor(maze[location.getRow()][location.getCol()]);
-       //     System.out.println("Attempted first");
+            // System.out.println("Attempted first");
         }
         if (location.getCol() < maze[0].length) {
             maze[location.getRow()][location.getCol() + 1].setWestNeighbor(maze[location.getRow()][location.getCol()]);
-      //      System.out.println("Attempted");
+            // System.out.println("Attempted");
         }
-
     }
 
     public void setCell(Location location, boolean eastWall, boolean southWall) {
@@ -127,7 +107,6 @@ public class Maze {
             west = getCellAtLocation(new Location(location.getRow(), location.getCol() - 1));
         }
         maze[location.getRow()][location.getCol()] = new Cell(location, north, west, eastWall, southWall);
-
     }
 
     public int getRows() {
@@ -146,12 +125,10 @@ public class Maze {
         return getCellAtLocation(new Location(getRows() - 1, getCols() - 1));
     }
 
-    // set Maze2 maze to Maze2 object
     public void setMaze(Maze maze2) {
         maze = maze2.maze;
     }
 
-    // get Maze2 maze
     public Maze getMaze() {
         return this;
     }
