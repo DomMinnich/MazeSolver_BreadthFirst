@@ -1,54 +1,134 @@
 public class Cell {
+
     public static final int NORTH = 0;
     public static final int SOUTH = 1;
     public static final int EAST = 2;
     public static final int WEST = 3;
     private boolean neighbors[] = new boolean[4];
-    private boolean onPath;
-    private char cellChar;
+    boolean isWallE = false;
+    boolean isWallS = false;
+    boolean isWallW = false;
+    boolean isWallN = false;
+    Location location;
+    int horizontalLocation = 0;
+    int verticalLocation = 0;
+    Cell northNeighbor = null;
+    Cell westNeighbor = null;
 
-    public Cell() {
-        for (int i = 0; i < 4; i++) {
-            neighbors[i] = false;
+    public boolean hasWallNorth() {
+        if (this.northNeighbor == null) {
+            return true;
         }
-        cellChar = '|'; 
-        onPath = false;
-    }
-    
-
-    public void setNeighbor(int direction) {
-        neighbors[direction] = true;
+        return northNeighbor.hasWallSouth();
     }
 
-    // getNeighbor() method
-    public Cell getNeighbor(int direction) {
-        if (neighbors[direction]) {
-            return new Cell();
+    public boolean hasWallSouth() {
+        return isWallS;
+    }
+
+    public boolean hasWallEast() {
+        return isWallE;
+    }
+
+    public boolean hasWallWest() {
+        if (this.westNeighbor == null) {
+            return true;
+        }
+        return westNeighbor.hasWallEast();
+    }
+
+    public Cell(Location location, Cell northNeighbor, Cell westNeighbor, boolean isWallE, boolean isWallS) {
+        this.location = location;
+        this.northNeighbor = northNeighbor;
+        this.westNeighbor = westNeighbor;
+        this.isWallE = isWallE;
+        this.isWallS = isWallS;
+    }
+
+    public Location[] getAccessibleNeighborLocations() {
+        Location[] neighborLocations = new Location[getNeighborsNum()];
+        int currentNeightborNum = 0;
+
+        if (!hasWallNorth()) {
+            neighborLocations[currentNeightborNum] = location.getLocation(NORTH);
+            currentNeightborNum++;
+        }
+        if (!hasWallSouth()) {
+            neighborLocations[currentNeightborNum] = location.getLocation(SOUTH);
+            currentNeightborNum++;
+        }
+        if (!hasWallEast()) {
+            neighborLocations[currentNeightborNum] = location.getLocation(EAST);
+            currentNeightborNum++;
+        }
+        if (!hasWallWest()) {
+            neighborLocations[currentNeightborNum] = location.getLocation(WEST);
+            currentNeightborNum++;
+        }
+        return neighborLocations;
+    }
+
+    public int getNeighborsNum() {
+        int neighborsNum = 0;
+        if (!hasWallNorth()) {
+            neighborsNum++;
+        }
+        if (!hasWallSouth()) {
+            neighborsNum++;
+        }
+        if (!hasWallEast()) {
+            neighborsNum++;
+        }
+        if (!hasWallWest()) {
+            neighborsNum++;
+        }
+        return neighborsNum;
+    }
+
+    public void setNorthNeighbor(Cell northNeighbor) {
+        this.northNeighbor = northNeighbor;
+    }
+
+    public Cell getNorthNeighbor() {
+        return northNeighbor;
+    }
+
+    public void setWestNeighbor(Cell westNeighbor) {
+        this.westNeighbor = westNeighbor;
+    }
+
+    public Cell getWestNeighbor() {
+        return westNeighbor;
+    }
+
+    public String toStringEast() {
+        if (hasWallEast()) {
+            return "|";
         } else {
-            return null;
+            return " ";
         }
     }
 
-    public boolean hasNeighbor(int direction) {
-        return neighbors[direction];
+    public String toStringSouth() {
+        if (hasWallSouth()) {
+            return "_";
+        } else {
+            return " ";
+        }
     }
 
-    public void setOnPath() {
-        onPath = true;
+    public String toString() {
+        return toStringSouth() + toStringEast();
     }
 
-    public boolean isOnPath() {
-        return onPath;
+    public String toString(String substitute) {
+
+        return substitute + toStringEast();
+
     }
 
-    // set the cell char
-    public void setCellChar(char cellChar) {
-        this.cellChar = cellChar;
-    }
-
-    // get the cell char
-    public char getCellChar() {
-        return cellChar;
+    public boolean equals(Cell otherCell) {
+        return location.equals(otherCell.location);
     }
 
 }

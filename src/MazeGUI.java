@@ -30,7 +30,7 @@ import javafx.stage.Stage;
 
 public class MazeGUI extends Application {
 
-    private Maze2 maze;
+    private Maze maze;
     private File file;
     public static int mazeSelected = 1;
     public int mazeCount = 1;
@@ -135,7 +135,7 @@ public class MazeGUI extends Application {
 
                 try (Scanner fileInput = new Scanner(getFileFirstTime())) {
                     // maze = maze.getMaze();
-                    maze = new Maze2(fileInput);
+                    maze = new Maze(fileInput);
                     maze.setMaze(maze);
 
                     Label label2 = new Label(maze.toString());
@@ -229,7 +229,7 @@ public class MazeGUI extends Application {
                 scrollBarPane.getChildren().clear();
                 scrollBarPane.getChildren().add(sl);
                 try (Scanner fileInput = new Scanner(getFile())) {
-                    maze = new Maze2(fileInput);
+                    maze = new Maze(fileInput);
                     maze.setMaze(maze);
                     BreadthFirstMazeRunner runner = new BreadthFirstMazeRunner(maze, maze.getStart(), maze.getFinish());
                     boolean b = runner.runMaze();
@@ -311,7 +311,7 @@ public class MazeGUI extends Application {
                            m = i + 1;
                             setMazeSelected(m);
                             try (Scanner fileInput = new Scanner(getFile())) {
-                                maze = new Maze2(fileInput);
+                                maze = new Maze(fileInput);
                                 maze.setMaze(maze);
                                 BreadthFirstMazeRunner runner = new BreadthFirstMazeRunner(maze, maze.getStart(),
                                         maze.getFinish());

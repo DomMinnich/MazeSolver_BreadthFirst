@@ -17,13 +17,13 @@ public class Location {// 1
     }
 
     public Location getLocation(int direction) {
-        if (direction == Cell2.NORTH) {
+        if (direction == Cell.NORTH) {
             return new Location(row - 1, col);
-        } else if (direction == Cell2.SOUTH) {
+        } else if (direction == Cell.SOUTH) {
             return new Location(row + 1, col);
-        } else if (direction == Cell2.EAST) {
+        } else if (direction == Cell.EAST) {
             return new Location(row, col + 1);
-        } else if (direction == Cell2.WEST) {
+        } else if (direction == Cell.WEST) {
             return new Location(row, col - 1);
         } else {
             return null;

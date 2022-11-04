@@ -20,7 +20,7 @@ public class QueueArr<E> {// 1
         size++;
     }
 
-    public void enqueue(Cell2 item, Location loc) {
+    public void enqueue(Cell item, Location loc) {
 
         if (item.location.previous == null) {
             item.location.previous = loc;

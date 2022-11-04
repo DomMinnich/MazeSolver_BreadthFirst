@@ -1,22 +1,22 @@
-public abstract class MazeRunner {// 1
-    protected Maze2 maze;
-    protected SetArr<Cell2> pathTaken;
-    protected Cell2 start;
-    protected Cell2 finish;
+public abstract class MazeRunner {
+    protected Maze maze;
+    protected SetArr<Cell> pathTaken;
+    protected Cell start;
+    protected Cell finish;
 
-    public MazeRunner(Cell2[][] maze, Cell2 start, Cell2 finish) {
-        this.maze = new Maze2(maze);
+    public MazeRunner(Cell[][] maze, Cell start, Cell finish) {
+        this.maze = new Maze(maze);
         start = this.start;
         finish = this.finish;
-        pathTaken = new SetArr<Cell2>();
+        pathTaken = new SetArr<Cell>();
 
     }
 
-    public MazeRunner(Maze2 maze2, Cell2 start, Cell2 finish) {
+    public MazeRunner(Maze maze2, Cell start, Cell finish) {
         this.maze = maze2;
         start = this.start;
         finish = this.finish;
-        pathTaken = new SetArr<Cell2>();
+        pathTaken = new SetArr<Cell>();
     }
 
     abstract boolean runMaze();
