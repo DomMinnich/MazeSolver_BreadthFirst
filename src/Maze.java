@@ -73,7 +73,7 @@ public class Maze {
             mazeString += "|";
             for (int j = 0; j < maze[i].length; j++) {
                 if (pathTaken.contains(maze[i][j])) {
-                    mazeString += maze[i][j].toString("x");
+                    mazeString += maze[i][j].toString("▫");
                 } else {
                     mazeString += maze[i][j].toString();
                 }
