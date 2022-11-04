@@ -153,6 +153,13 @@ public class MazeGUI extends Application {
                 BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
         Background wallpaper4 = new Background(bg4);
 
+        Image image5 = new Image("76-open-close-mouth.gif", 100, 100, false, false);
+        BackgroundImage bg5 = new BackgroundImage(image5, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+        Background wallpaper5 = new Background(bg5);
+
+
+
         Pane runningPacMan = new Pane();
         runningPacMan.setMinSize(400, 100);
         runningPacMan.setMaxSize(400, 100);
@@ -170,6 +177,12 @@ public class MazeGUI extends Application {
         greyBack.setMaxSize(2000, 2000);
         greyBack.setMinSize(2000, 2000);
         greyBack.setBackground(wallpaper4);
+        Pane pacManDude = new Pane();
+        pacManDude.translateXProperty().set(217);
+        pacManDude.translateYProperty().set(195);
+        pacManDude.setMaxSize(20, 20);
+        pacManDude.setMinSize(20, 20);
+        pacManDude.setBackground(wallpaper5);
         Label sTLabel = new Label("| Maze 1 Selected");
         sTLabel.setFont(font2);
         sTLabel.setTextFill(Color.YELLOW);
@@ -228,7 +241,7 @@ public class MazeGUI extends Application {
                 } catch (FileNotFoundException e1) {
                     e1.printStackTrace();
                 }
-                scrollBarPane.getChildren().addAll(blackPng, runningPacMan);
+                scrollBarPane.getChildren().addAll(blackPng, runningPacMan, pacManDude);
             }
         };
         readMazesBt.setOnAction(read);
@@ -241,7 +254,7 @@ public class MazeGUI extends Application {
         EventHandler<ActionEvent> findPathSingle = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 scrollBarPane.getChildren().clear();
-                scrollBarPane.getChildren().addAll(sl, greyBack, blackPng, runningPacMan);
+                scrollBarPane.getChildren().addAll(sl, greyBack, blackPng, runningPacMan, pacManDude);
                 maze = maze.getMaze();
                 BreadthFirstMazeRunner runner = new BreadthFirstMazeRunner(maze, maze.getStart(), maze.getFinish());
                 boolean b = runner.runMaze();
@@ -301,7 +314,7 @@ public class MazeGUI extends Application {
                 scrollBarPane.getChildren().clear();
                 scrollBarPane.getChildren().addAll(sl, greyBack);
                 sTLabel.setText("| Maze " + mazeSelected + " Selected");
-                scrollBarPane.getChildren().addAll(blackPng, runningPacMan);
+                scrollBarPane.getChildren().addAll(blackPng, runningPacMan, pacManDude);
                 try (Scanner fileInput = new Scanner(getFile())) {
                     maze = new Maze(fileInput);
                     maze.setMaze(maze);
