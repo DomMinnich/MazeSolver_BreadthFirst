@@ -216,7 +216,7 @@ public class MazeGUI extends Application {
             setMazeSelected(mazeSelected);
             if (mazeSelected > mazeCount) {
                 // pop up error message
-                System.out.println("error maze not imported on slot selected");
+                System.out.println("Error Maze Not Imported On Slot Selected");
             } else {
                // System.out.println("maze selected is: " + mazeSelected);
                 scrollBarPane.getChildren().clear();
@@ -293,7 +293,7 @@ public class MazeGUI extends Application {
                     setMazeSelected(mazeSelected);
                     if (mazeSelected > mazeCount) {
                         // pop up error message
-                        System.out.println("error maze not imported on slot selected");
+                        System.out.println("Error Maze Not Imported On Slot Selected");
                     } else {
                        // System.out.println("maze selected is: " + mazeSelected);
                         scrollBarPane.getChildren().clear();
