@@ -73,7 +73,7 @@ public class Maze {
             mazeString += "|";
             for (int j = 0; j < maze[i].length; j++) {
                 if (pathTaken.contains(maze[i][j])) {
-                    mazeString += maze[i][j].toString("▫");
+                    mazeString += maze[i][j].toString("▫");  //was told by professor that this character is okay to use
                 } else {
                     mazeString += maze[i][j].toString();
                 }
