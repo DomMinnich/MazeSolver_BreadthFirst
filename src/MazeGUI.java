@@ -41,6 +41,8 @@ public class MazeGUI extends Application {
     public int mazeCount = 1;
     boolean solveAll = false;
 
+    // Setters and Getters
+
     public static void setMazeSelected(int mazeSelected) {
         MazeGUI.mazeSelected = mazeSelected;
     }
@@ -73,6 +75,8 @@ public class MazeGUI extends Application {
         return file;
     }
 
+    // Start Method
+
     public void start(Stage primaryStage) throws Exception {
 
         // Main Font
@@ -82,21 +86,18 @@ public class MazeGUI extends Application {
         // Labels
 
         Label mazeNormalString = new Label("");
-        // set text to maze.toString();
         mazeNormalString.setFont(font2);
         mazeNormalString.setTextFill(Color.CYAN);
         mazeNormalString.setTranslateX(200);
         mazeNormalString.setTranslateY(150);
 
         Label mazeSolvedString = new Label("");
-        // set text to maze.toString(runner.pathTaken());
         mazeSolvedString.setFont(font2);
         mazeSolvedString.setTextFill(Color.YELLOW);
         mazeSolvedString.setTranslateX(200);
         mazeSolvedString.setTranslateY(150);
 
         Label mazeFailedString = new Label("");
-        // set text to maze.toString();
         mazeFailedString.setFont(font2);
         mazeFailedString.setTextFill(Color.RED);
         mazeFailedString.setTranslateX(200);
@@ -133,6 +134,8 @@ public class MazeGUI extends Application {
         ScrollPane scrollBar = new ScrollPane(scrollBarPane);
         scrollBar.setMaxSize(1100, 600);
         scrollBar.setMinSize(1100, 600);
+
+        // Images and Backgrounds
         Image image = new Image("giphy3.gif", 200, 100, false, false);
         BackgroundImage bg = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
@@ -158,8 +161,7 @@ public class MazeGUI extends Application {
                 BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
         Background wallpaper5 = new Background(bg5);
 
-
-
+        // Image Panes
         Pane runningPacMan = new Pane();
         runningPacMan.setMinSize(400, 100);
         runningPacMan.setMaxSize(400, 100);
@@ -191,7 +193,7 @@ public class MazeGUI extends Application {
         blackPng.getChildren().add(sTLabel);
         scrollBarPane.getChildren().addAll(greyBack, pacManMaze);
 
-        // start
+        // On Start
         Label st = new Label("Click \"Read Mazes\" To Find Your Maze File");
         st.setFont(font2);
         st.setTextFill(Color.YELLOW);

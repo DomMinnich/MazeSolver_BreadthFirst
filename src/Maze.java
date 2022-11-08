@@ -109,6 +109,7 @@ public class Maze {
         maze[location.getRow()][location.getCol()] = new Cell(location, north, west, eastWall, southWall);
     }
 
+    // Setters and Getters
     public int getRows() {
         return maze.length;
     }
