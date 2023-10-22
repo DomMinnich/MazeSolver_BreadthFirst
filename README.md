@@ -1,9 +1,8 @@
 
 
 
-Uploading This it what it should look like.mp4…
 
-
+https://github.com/DomMinnich/MazeSolver_BreadthFirst/assets/113619219/bd3efd06-e18c-4d1c-8988-d74ab175a170
 
 
 
